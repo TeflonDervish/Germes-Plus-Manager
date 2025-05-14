@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Документооборот</title>
+    <link rel="stylesheet" href="for_point.css"/>
+    <style>
+
+.form-group input{
+    height: 20px;
+    width: 480px;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #cccccccc;
+    /* padding-left: 10px; */
+    border-radius: 25px;
+    font-size: 20px;
+    background: rgba(255, 255, 255, 0.651);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+       
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+    <header>    
+        <div class="nav-and-search">
+            <h1>г. Уфа Торговый центр "Парус"</h1>
+        </div>
+        <div class="icons">
+            <a href="#user"> <img height="35px" th:src="@{img/header/user.png}"></a>
+        </div>
+
+    </header>
+    <div class="container">
+        <div class="sidebar">
+                <a>Заказы</a>
+                <a>Товары на складе</a>  
+                <a>Отчетность</a>
+                <a>Регистрация менеджера</a>
+                <a>Регистрация клиента</a>    
+                <a>Магазин</a> 
+                <div class="logo-container">
+                    <img height="150px" th:src="@{img/body/forLoginRegistration/germes.png}" alt="">
+                </div>
+        </div>
+        <div class="client">
+        <div class="form_client">
+            <h2>Регистрация менеджера магазина</h2>
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <label for="username">Номер телефона:</label> 
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="username">Фамилия:</label> 
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="username">Имя:</label> 
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="username">Город:</label> 
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Зарегестрировать</button>
+            </form>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>
