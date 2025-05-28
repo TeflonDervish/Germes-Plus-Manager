@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.example.germesplusmanager.enums.Role;
 import org.example.germesplusmanager.model.PointOfSale;
 import org.example.germesplusmanager.model.persons.PointManager;
-import org.example.germesplusmanager.repository.IndividualPersonRepository;
 import org.example.germesplusmanager.repository.PointManagerRepository;
 import org.example.germesplusmanager.service.PointOfSaleService;
 import org.springframework.boot.ApplicationRunner;
@@ -40,7 +39,7 @@ public class AppConfig {
                     "Admin",
                     "Name",
                     passwordEncoder.encode("admin"),
-                    Role.USER,
+                    Role.ADMIN,
                     point
             );
         };

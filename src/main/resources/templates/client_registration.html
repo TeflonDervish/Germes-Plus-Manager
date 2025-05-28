@@ -24,17 +24,24 @@
 </head>
 <body>
     <div class="wrapper">
-    <header>    
-        <div class="nav-and-search">
-            <h1 th:text="${manager.pointOfSale.name}">г. Уфа Торговый центр "Парус"</h1>
-        </div>
-        <div class="icons">
-            <a th:href="@{/account}"> <img height="35px" th:src="@{/img/header/user.png}"></a>
-        </div>
-
-    </header>
-    <div class="container">
-        <div class="sidebar">
+        <header class="fixed">
+            <div class="nav-and-search">
+                <h1 th:text="${manager.pointOfSale.name}">г. Уфа Торговый центр "Парус"</h1>
+            </div>
+            <div class="icons">
+                <a th:href="@{/account}"> <img height="35px" th:src="@{/img/header/user.png}"></a>
+            </div>
+        </header>
+        <header class="invisible">
+            <div class="nav-and-search">
+                <h1 th:text="${manager.pointOfSale.name}">г. Уфа Торговый центр "Парус"</h1>
+            </div>
+            <div class="icons">
+                <a th:href="@{/account}"> <img height="35px" th:src="@{/img/header/user.png}"></a>
+            </div>
+        </header>
+        <div class="container">
+            <div class="sidebar fixed" style="">
                 <a th:href="@{/order}">Заказы</a>
                 <a th:href="@{/sclad}">Товары на складе</a>
                 <a th:href="@{/otchet}">Отчетность</a>
@@ -43,7 +50,17 @@
                 <div class="logo-container">
                     <img height="150px" th:src="@{/img/body/forLoginRegistration/germes.png}" alt="">
                 </div>
-        </div>
+            </div>
+            <div class="sidebar invisible" style="">
+                <a th:href="@{/order}">Заказы</a>
+                <a th:href="@{/sclad}">Товары на складе</a>
+                <a th:href="@{/otchet}">Отчетность</a>
+                <a th:href="@{/registration}">Регистрация клиента</a>
+                <a th:href="@{/point}">Магазин</a>
+                <div class="logo-container">
+                    <img height="150px" th:src="@{/img/body/forLoginRegistration/germes.png}" alt="">
+                </div>
+            </div>
         <div class="client">
         <div class="form_client">
             <h2>Регистрация клиента</h2>

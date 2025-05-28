@@ -10,26 +10,43 @@
 <body>
     <script src="https://api-maps.yandex.ru/2.1/?apikey=bff7b351-d1e8-45d3-a920-587566731f5e&lang=ru_RU"></script>
     <div class="wrapper">
-    <header>    
-        <div class="nav-and-search">
-            <h1 th:text="${manager.pointOfSale.name}">г. Уфа Торговый центр "Парус"</h1>
-        </div>
-        <div class="icons">
-            <a th:href="@{/account}"> <img height="35px" th:src="@{/img/header/user.png}"></a>
-        </div>
-
-    </header>
-    <div class="container">
-        <div class="sidebar">
-            <a th:href="@{/order}">Заказы</a>
-            <a th:href="@{/sclad}">Товары на складе</a>
-            <a th:href="@{/otchet}">Отчетность</a>
-            <a th:href="@{/registration}">Регистрация клиента</a>
-            <a th:href="@{/point}">Магазин</a>
+        <header class="fixed">
+            <div class="nav-and-search">
+                <h1 th:text="${manager.pointOfSale.name}">г. Уфа Торговый центр "Парус"</h1>
+            </div>
+            <div class="icons">
+                <a th:href="@{/account}"> <img height="35px" th:src="@{/img/header/user.png}"></a>
+            </div>
+        </header>
+        <header class="invisible">
+            <div class="nav-and-search">
+                <h1 th:text="${manager.pointOfSale.name}">г. Уфа Торговый центр "Парус"</h1>
+            </div>
+            <div class="icons">
+                <a th:href="@{/account}"> <img height="35px" th:src="@{/img/header/user.png}"></a>
+            </div>
+        </header>
+        <div class="container">
+            <div class="sidebar fixed" style="">
+                <a th:href="@{/order}">Заказы</a>
+                <a th:href="@{/sclad}">Товары на складе</a>
+                <a th:href="@{/otchet}">Отчетность</a>
+                <a th:href="@{/registration}">Регистрация клиента</a>
+                <a th:href="@{/point}">Магазин</a>
                 <div class="logo-container">
                     <img height="150px" th:src="@{/img/body/forLoginRegistration/germes.png}" alt="">
                 </div>
-        </div>
+            </div>
+            <div class="sidebar invisible" style="">
+                <a th:href="@{/order}">Заказы</a>
+                <a th:href="@{/sclad}">Товары на складе</a>
+                <a th:href="@{/otchet}">Отчетность</a>
+                <a th:href="@{/registration}">Регистрация клиента</a>
+                <a th:href="@{/point}">Магазин</a>
+                <div class="logo-container">
+                    <img height="150px" th:src="@{/img/body/forLoginRegistration/germes.png}" alt="">
+                </div>
+            </div>
         
         <div class="center flex_center">
             <div class="contact-info">
