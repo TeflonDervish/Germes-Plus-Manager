@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Документооборот</title>
-    <link rel="stylesheet" href="for_point.css"/>
+    <link rel="stylesheet" th:href="@{/style/for_point.css}" />
 
 
     <style>
@@ -367,11 +367,11 @@
     </header>
     <div class="container">
         <div class="sidebar">
-                <a>Заказы</a>
-                <a>Товары на складе</a>  
-                <a>Отчетность</a>
-                <a>Регистрация клиента</a>   
-                <a>Магазин</a> 
+            <a th:href="@{/order}">Заказы</a>
+            <a th:href="@{/sclad}">Товары на складе</a>
+            <a th:href="@{/otchet}">Отчетность</a>
+            <a th:href="@{/registration}">Регистрация клиента</a>
+            <a th:href="@{/point}">Магазин</a>
                 <div class="logo-container">
                     <img height="150px" th:src="@{img/body/forLoginRegistration/germes.png}" alt="">
                 </div>

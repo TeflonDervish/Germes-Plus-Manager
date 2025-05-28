@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Документооборот</title>
-    <link rel="stylesheet" href="for_point.css"/>
+    <link rel="stylesheet" th:href="@{/style/for_point.css}" />
     <style>
 
         
@@ -24,11 +24,11 @@
     </header>
     <div class="container">
         <div class="sidebar">
-                <a>Заказы</a>
-                <a>Товары на складе</a>  
-                <a>Отчетность</a>
-                <a>Регистрация клиента</a>   
-                <a>Магазин</a> 
+            <a th:href="@{/order}">Заказы</a>
+            <a th:href="@{/sclad}">Товары на складе</a>
+            <a th:href="@{/otchet}">Отчетность</a>
+            <a th:href="@{/registration}">Регистрация клиента</a>
+            <a th:href="@{/point}">Магазин</a>
                 <div class="logo-container">
                     <img height="150px" th:src="@{img/body/forLoginRegistration/germes.png}" alt="">
                 </div>
@@ -36,7 +36,9 @@
         
         <div class="main-content">
             <header class="header_for_point">
-
+                <div class="nav-and-search">
+                    <button>+ Создать отчет</button>
+            </div>
                 <div class="search-container">
                     <input type="text" placeholder="Поиск...">
                 </div>
@@ -45,22 +47,21 @@
             <table class="documents-table">
                 <thead>
                     <tr>
-                        <th class="filter-header">
-                            <span class="filter-icon">Статус</span>
-                            <div class="filter-dropdown">
-                                <select>
-                                    <option value="">Все статусы</option>
-                                    <option value="active">В наличии</option>
-                                    <option value="archived">Изготавливается</option>
-                                </select>
-                                <button>Применить</button>
-                            </div>
+                        <th>
+                            <span>№</span>
                         </th>
-                        <th >Наименование                           
+                        <th>
+                            <span>Наименование</span>
                         </th>
-                        <th>Общий габарит</th>
-                        <th>Стоимость</th>
-                        <th>Количество</th>
+                        <th>
+                            <span>От</span>
+                        </th>
+                        <th><span>До</span></th>
+                        <th><span>Сумма</span></th>
+                        <th><span>Количество заказов</span></th>
+                        <th>
+                            <span>Средняя стоимость</span>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,8 +70,9 @@
                         <td class="document-name">Договор №1245 от 15.03.2025</td>
                         <td class="document-date">26.03.2025 14:30</td>
                         <td>Договор</td>
+                        <td>ООО "ТехноПром"</td>
 
-
+                        <td>Входящий</td>
                     </tr>
                     <tr>
                         <td><span class="status">Черновик</span></td>
@@ -78,7 +80,7 @@
                         <td>ИП Смирнов А.А.</td>
                         <td class="document-name">Акт выполненных работ №45</td>
                         <td class="document-date">25.03.2025 10:15</td>
-
+                        <td>Исходящий</td>
                     </tr>
                     <tr>
                         <td><span class="status status-active">Активен</span></td>
@@ -86,7 +88,7 @@
                         <td>ООО "СтройГарант"</td>
                         <td class="document-name">Счет на оплату №678</td>
                         <td class="document-date">24.03.2025 16:45</td>
-
+                        <td>Внутренний</td>
                     </tr>
                 </tbody>
             </table>

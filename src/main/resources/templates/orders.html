@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Документооборот</title>
+    <link rel="stylesheet" th:href="@{/style/for_point.css}"/>
+    <style>
+
+
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <div class="nav-and-search">
+            <h1>г. Уфа Торговый центр "Парус"</h1>
+        </div>
+        <div class="icons">
+            <a href="#user"> <img height="35px" th:src="@{img/header/user.png}"></a>
+        </div>
+
+    </header>
+    <div class="container">
+        <div class="sidebar">
+            <a th:href="@{/order}">Заказы</a>
+            <a th:href="@{/sclad}">Товары на складе</a>
+            <a th:href="@{/otchet}">Отчетность</a>
+            <a th:href="@{/registration}">Регистрация клиента</a>
+            <a th:href="@{/point}">Магазин</a>
+            <div class="logo-container">
+                <img height="150px" th:src="@{img/body/forLoginRegistration/germes.png}" alt="">
+            </div>
+        </div>
+
+        <div class="main-content">
+            <header class="header_for_point">
+                <div class="nav-and-search">
+                    <button>+ Создать заказ</button>
+                </div>
+                <div class="search-container">
+                    <input type="text" placeholder="Поиск...">
+                </div>
+
+            </header>
+            <table class="documents-table">
+                <thead>
+                <tr>
+                    <th class="filter-header">
+                        <span class="filter-icon">Статус</span>
+                        <div class="filter-dropdown">
+                            <select>
+                                <option value="">Все статусы</option>
+                                <option value="active">Ожидает подтверждения</option>
+                                <option value="draft">Подтвержден</option>
+                                <option value="archived">В обработке</option>
+                                <option value="active">Изготавливается</option>
+                                <option value="draft">В пути</option>
+                                <option value="archived">Готов к выдаче</option>
+                                <option value="active">Выдан</option>
+                                <option value="draft">Отменен</option>
+                            </select>
+                            <button>Применить</button>
+                        </div>
+                    </th>
+                    <th>Номер заказа
+                    </th>
+                    <th>Дата заказа</th>
+                    <th>Телефон получателя</th>
+                    <th class="filter-header">
+                        <span class="filter-icon">Способ получения</span>
+                        <div class="filter-dropdown">
+                            <select>
+                                <option value="">Все направления</option>
+                                <option value="incoming">Доставка</option>
+                                <option value="outgoing">Самовывоз</option>
+                            </select>
+                            <button>Применить</button>
+                        </div>
+                    </th>
+                    <th>Стоимость заказа</th>
+                    <th class="filter-header">
+                        <span class="filter-icon">Менеджер</span>
+                        <div class="filter-dropdown">
+                            <select>
+                                <option value="">Все направления</option>
+                                <option value="incoming">Входящий</option>
+                                <option value="outgoing">Исходящий</option>
+                                <option value="internal">Внутренний</option>
+                            </select>
+                            <button>Применить</button>
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><span class="status status">Ожидает подтверждения</span></td>
+                    <td>321001</td>
+                    <td>2025-03-15</td>
+                    <td>+7 999 111-22-33</td>
+                    <td>Доставка</td>
+                    <td>36 500 ₽</td>
+                    <td>Гареева</td>
+                </tr>
+                <tr>
+                    <td><span class="status">Подтвержден</span></td>
+                    <td>2031002</td>
+                    <td>2025-03-16</td>
+                    <td>+7 912 222-33-44</td>
+                    <td>Самовывоз</td>
+                    <td>25 200 ₽</td>
+                    <td>Иванова</td>
+                </tr>
+                <tr>
+                    <td><span class="status status">Изготавливается</span></td>
+                    <td>971003</td>
+                    <td>2025-03-17</td>
+                    <td>+7 923 333-44-55</td>
+                    <td>Доставка</td>
+                    <td>40 000 ₽</td>
+                    <td>Иванова</td>
+                </tr>
+                <tr>
+                    <td><span class="status">В пути</span></td>
+                    <td>321004</td>
+                    <td>2025-03-18</td>
+                    <td>+7 934 444-55-66</td>
+                    <td>Самовывоз</td>
+                    <td>65 700 ₽</td>
+                    <td>Макарова</td>
+                </tr>
+                <tr>
+                    <td><span class="status">Готов к выдаче</span></td>
+                    <td>756005</td>
+                    <td>2025-03-19</td>
+                    <td>+7 945 555-66-77</td>
+                    <td>Доставка</td>
+                    <td>61 800 ₽</td>
+                    <td>Гареева</td>
+                </tr>
+                <tr>
+                    <td><span class="status">Выдан</span></td>
+                    <td>921006</td>
+                    <td>2025-03-20</td>
+                    <td>+7 956 666-77-88</td>
+                    <td>Самовывоз</td>
+                    <td>49 500 ₽</td>
+                    <td>Иванова</td>
+                </tr>
+                <tr>
+                    <td><span class="status">Отменен</span></td>
+                    <td>231007</td>
+                    <td>2025-03-21</td>
+                    <td>+7 967 777-88-99</td>
+                    <td>Доставка</td>
+                    <td>90 000 ₽</td>
+                    <td>Макарова</td>
+                </tr>
+                <tr>
+                    <td><span class="status">Ожидает подтверждения</span></td>
+                    <td>Договор №1008</td>
+                    <td>2025-03-22 08:55</td>
+                    <td>+7 978 888-99-00</td>
+                    <td>Самовывоз</td>
+                    <td>13 300 ₽</td>
+                    <td>Входящий</td>
+                </tr>
+                <tr>
+                    <td><span class="status">Подтвержден</span></td>
+                    <td>Счет №1009</td>
+                    <td>2025-03-23 17:25</td>
+                    <td>+7 989 999-00-11</td>
+                    <td>Доставка</td>
+                    <td>7 700 ₽</td>
+                    <td>Исходящий</td>
+                </tr>
+                <tr>
+                    <td><span class="status">В обработке</span></td>
+                    <td>Акт №1010</td>
+                    <td>2025-03-24 13:00</td>
+                    <td>+7 900 123-45-67</td>
+                    <td>Самовывоз</td>
+                    <td>11 200 ₽</td>
+                    <td>Внутренний</td>
+                </tr>
+                <!-- Ещё 10 строк -->
+                <tr>
+                    <td><span class="status">Изготавливается</span></td>
+                    <td>Заказ №1011</td>
+                    <td>2025-03-25 09:15</td>
+                    <td>+7 901 234-56-78</td>
+                    <td>Доставка</td>
+                    <td>14 000 ₽</td>
+                    <td>Входящий</td>
+                </tr>
+                <tr>
+                    <td><span class="status">Готов к выдаче</span></td>
+                    <td>Договор №1012</td>
+                    <td>2025-03-26 16:45</td>
+                    <td>+7 902 345-67-89</td>
+                    <td>Самовывоз</td>
+                    <td>9 900 ₽</td>
+                    <td>Исходящий</td>
+                </tr>
+                <tr>
+                    <td><span class="status">Выдан</span></td>
+                    <td>Счет №1013</td>
+                    <td>2025-03-27 10:50</td>
+                    <td>+7 903 456-78-90</td>
+                    <td>Доставка</td>
+                    <td>18 000 ₽</td>
+                    <td>Внутренний</td>
+                </tr>
+                <tr>
+                    <td><span class="status">Отменен</span></td>
+                    <td>Акт №1014</td>
+                    <td>2025-03-28 14:20</td>
+                    <td>+7 904 567-89-01</td>
+                    <td>Самовывоз</td>
+                    <td>5 500 ₽</td>
+                    <td>Исходящий</td>
+                </tr>
+                <tr>
+                    <td><span class="status">Ожидает подтверждения</span></td>
+                    <td>Заказ №1015</td>
+                    <td>2025-03-29 11:10</td>
+                    <td>+7 905 678-90-12</td>
+                    <td>Доставка</td>
+                    <td>22 300 ₽</td>
+                    <td>Внутренний</td>
+                </tr>
+                <tr>
+                    <td><span class="status">Подтвержден</span></td>
+                    <td>Договор №1016</td>
+                    <td>2025-03-30 12:30</td>
+                    <td>+7 906 789-01-23</td>
+                    <td>Самовывоз</td>
+                    <td>17 400 ₽</td>
+                    <td>Входящий</td>
+                </tr>
+                <tr>
+                    <td><span class="status">Изготавливается</span></td>
+                    <td>Счет №1017</td>
+                    <td>2025-03-31 09:00</td>
+                    <td>+7 907 890-12-34</td>
+                    <td>Доставка</td>
+                    <td>20 600 ₽</td>
+                    <td>Исходящий</td>
+                </tr>
+                <tr>
+                    <td><span class="status">В пути</span></td>
+                    <td>33291018</td>
+                    <td>2025-04-01 15:35</td>
+                    <td>+7 908 901-23-45</td>
+                    <td>Самовывоз</td>
+                    <td>16 900 ₽</td>
+                    <td>Внутренний</td>
+                </tr>
+                <tr>
+                    <td><span class="status">Готов к выдаче</span></td>
+                    <td>120019</td>
+                    <td>2025-04-02 13:50</td>
+                    <td>+7 909 012-34-56</td>
+                    <td>Доставка</td>
+                    <td>12 750 ₽</td>
+                    <td>Входящий</td>
+                </tr>
+                <tr>
+                    <td><span class="status">Выдан</span></td>
+                    <td>201020</td>
+                    <td>2025-04-03 10:20</td>
+                    <td>+7 910 123-45-67</td>
+                    <td>Самовывоз</td>
+                    <td>21 100 ₽</td>
+                    <td>Исходящий</td>
+                </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    // Простая реализация фильтрации
+    document.querySelectorAll('.filter-dropdown button').forEach(button => {
+        button.addEventListener('click', function () {
+            const columnIndex = this.closest('th').cellIndex;
+            const select = this.previousElementSibling;
+            const filterValue = select.value;
+            const table = this.closest('table');
+
+            table.querySelectorAll('tbody tr').forEach(row => {
+                const cell = row.cells[columnIndex];
+                const cellValue = cell.textContent.trim().toLowerCase();
+
+                if (filterValue === "" || cellValue.includes(filterValue.toLowerCase())) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+
+
+</body>
+</html>
