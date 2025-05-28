@@ -3,6 +3,7 @@ package org.example.germesplusmanager.service;
 import lombok.AllArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.example.germesplusmanager.enums.DeliveryType;
 import org.example.germesplusmanager.enums.OrderStatus;
 import org.example.germesplusmanager.model.orders.OrderForIndividual;
 import org.example.germesplusmanager.model.persons.IndividualPerson;
@@ -93,5 +94,15 @@ public class OrderForIndividualService {
         OrderForIndividual orderForIndividual = getById(id);
         orderForIndividual.setStatus(status);
         return save(orderForIndividual);
+    }
+
+    public  List<OrderForIndividual> getByStatus(OrderStatus status) {
+        log.info("Поиск по статусу " + status);
+        return orderForIndividualRepository.findByStatus(status);
+    }
+
+    public List<OrderForIndividual> getByDeliveryType(DeliveryType deliveryType) {
+        log.info("Поиск по типу доставки " + deliveryType);
+        return orderForIndividualRepository.findByDeliveryType(deliveryType);
     }
 }

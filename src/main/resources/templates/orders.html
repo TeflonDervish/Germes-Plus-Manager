@@ -51,20 +51,16 @@
                 <tr>
                     <th class="filter-header">
                         <span class="filter-icon">Статус</span>
-                        <div class="filter-dropdown">
-                            <select>
-                                <option value="">Все статусы</option>
-                                <option value="active">Ожидает подтверждения</option>
-                                <option value="draft">Подтвержден</option>
-                                <option value="archived">В обработке</option>
-                                <option value="active">Изготавливается</option>
-                                <option value="draft">В пути</option>
-                                <option value="archived">Готов к выдаче</option>
-                                <option value="active">Выдан</option>
-                                <option value="draft">Отменен</option>
-                            </select>
-                            <button>Применить</button>
-                        </div>
+                        <form th:action="@{/order/status}" method="post">
+                            <div class="filter-dropdown">
+                                <select name="status">
+                                    <option th:each="status : ${status}" th:value="${status}" th:text="${status.title}">
+                                        Ожидает подтверждения
+                                    </option>
+                                </select>
+                                <button type="submit">Применить</button>
+                            </div>
+                        </form>
                     </th>
                     <th>Номер заказа
                     </th>
@@ -72,27 +68,21 @@
                     <th>Телефон получателя</th>
                     <th class="filter-header">
                         <span class="filter-icon">Способ получения</span>
-                        <div class="filter-dropdown">
-                            <select>
-                                <option value="">Все направления</option>
-                                <option value="incoming">Доставка</option>
-                                <option value="outgoing">Самовывоз</option>
-                            </select>
-                            <button>Применить</button>
-                        </div>
+                        <form th:action="@{/order/delivery}" method="post">
+                            <div class="filter-dropdown">
+                                <select name="deliveryType">
+                                    <option value="null">Все направления</option>
+                                    <option th:each="deliveryType : ${deliveryType}" th:value="${deliveryType}"
+                                            th:text="${deliveryType.title}">Доставка
+                                    </option>
+                                </select>
+                                <button type="submit">Применить</button>
+                            </div>
+                        </form>
                     </th>
                     <th>Стоимость заказа</th>
-                    <th class="filter-header">
-                        <span class="filter-icon">Менеджер</span>
-                        <div class="filter-dropdown">
-                            <select>
-                                <option value="">Все направления</option>
-                                <option value="incoming">Входящий</option>
-                                <option value="outgoing">Исходящий</option>
-                                <option value="internal">Внутренний</option>
-                            </select>
-                            <button>Применить</button>
-                        </div>
+                    <th>
+                        Менеджер
                     </th>
                 </tr>
                 </thead>
@@ -101,10 +91,13 @@
                     <td><a th:text="${order.status.title}" th:href="@{/order/{id} (id=${order.id})}"></a></td>
                     <td><a th:text="${order.id}" th:href="@{/order/{id} (id=${order.id})}">321001</a></td>
                     <td><a th:text="${order.orderDate}" th:href="@{/order/{id} (id=${order.id})}">2025-03-15</a></td>
-                    <td><a th:text="${order.individualPerson.phone}" th:href="@{/order/{id} (id=${order.id})}">+7 999 111-22-33</a></td>
-                    <td><a th:text="${order.deliveryType.title}" th:href="@{/order/{id} (id=${order.id})}">Доставка</a></td>
+                    <td><a th:text="${order.individualPerson.phone}" th:href="@{/order/{id} (id=${order.id})}">+7 999
+                        111-22-33</a></td>
+                    <td><a th:text="${order.deliveryType.title}" th:href="@{/order/{id} (id=${order.id})}">Доставка</a>
+                    </td>
                     <td><a th:text="${order.totalPrice}" th:href="@{/order/{id} (id=${order.id})}">36 500 ₽</a></td>
-                    <td><a th:text="${order.individualPerson.surname}" th:href="@{/order/{id} (id=${order.id})}">Гареева</a></td>
+                    <td><a th:text="${order.individualPerson.surname}"
+                           th:href="@{/order/{id} (id=${order.id})}">Гареева</a></td>
                 </tr>
                 </tbody>
             </table>

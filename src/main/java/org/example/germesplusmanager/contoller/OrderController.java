@@ -3,6 +3,7 @@ package org.example.germesplusmanager.contoller;
 import lombok.AllArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.example.germesplusmanager.enums.DeliveryType;
 import org.example.germesplusmanager.enums.OrderStatus;
 import org.example.germesplusmanager.model.PointOfSale;
 import org.example.germesplusmanager.model.orders.OrderForIndividual;
@@ -11,6 +12,7 @@ import org.example.germesplusmanager.model.products.ProductForIndividual;
 import org.example.germesplusmanager.repository.OrderForIndividualRepository;
 import org.example.germesplusmanager.service.OrderForIndividualService;
 import org.example.germesplusmanager.service.PointOfSaleService;
+import org.springframework.boot.Banner;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +33,7 @@ public class OrderController {
     public void addAttributes(Model model,
                               @AuthenticationPrincipal PointManager manager) {
         model.addAttribute("manager", manager);
+        model.addAttribute("status", OrderStatus.values());
     }
 
     @GetMapping
@@ -38,6 +41,7 @@ public class OrderController {
         List<OrderForIndividual> orders = orderForIndividualService.getAll();
 
         model.addAttribute("orders", orders);
+        model.addAttribute("deliveryType", DeliveryType.values());
 
         return "orders";
     }
@@ -52,7 +56,6 @@ public class OrderController {
 
         model.addAttribute("products", products);
         model.addAttribute("order", order);
-        model.addAttribute("status", OrderStatus.values());
 
         return "order";
     }
@@ -83,5 +86,24 @@ public class OrderController {
         log.info(status);
         orderForIndividualService.changeOrderStatus(id, OrderStatus.valueOf(status));
         return "redirect:/order/" + id;
+    }
+
+    @PostMapping("/status")
+    public String findByStatus(Model model,
+                               @RequestParam OrderStatus status) {
+        List<OrderForIndividual> orders = orderForIndividualService.getByStatus(status);
+
+        model.addAttribute("orders", orders);
+
+        return "orders";
+    }
+
+    @PostMapping("/delivery")
+    public String getDeliveryType(Model model,
+                                  @RequestParam String deliveryType) {
+        if (deliveryType.equals("null")) return "redirect:/order";
+        List<OrderForIndividual> orders = orderForIndividualService.getByDeliveryType(DeliveryType.valueOf(deliveryType));
+        model.addAttribute("orders", orders);
+        return "orders";
     }
 }

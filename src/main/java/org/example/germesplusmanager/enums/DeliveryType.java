@@ -7,7 +7,7 @@ public enum DeliveryType {
     DELIVERY("Доставка"),
     PICKUP("Самовывоз");
 
-    private String title;
+    private final String title;
 
     DeliveryType(String title) {
         this.title = title;

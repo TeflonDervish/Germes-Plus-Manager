@@ -47,17 +47,17 @@
             <table class="documents-table">
                 <thead>
                 <tr>
-                    <th class="filter-header">
-                        <span class="filter-icon">Статус</span>
-                        <div class="filter-dropdown">
-                            <select>
-                                <option value="">Все статусы</option>
-                                <option value="active">В наличии</option>
-                                <option value="archived">Изготавливается</option>
-                            </select>
-                            <button>Применить</button>
-                        </div>
-                    </th>
+<!--                    <th class="filter-header">-->
+<!--                        <span class="filter-icon">Статус</span>-->
+<!--                        <div class="filter-dropdown">-->
+<!--                            <select>-->
+<!--                                <option value="">Все статусы</option>-->
+<!--                                <option value="active">В наличии</option>-->
+<!--                                <option value="archived">Изготавливается</option>-->
+<!--                            </select>-->
+<!--                            <button>Применить</button>-->
+<!--                        </div>-->
+<!--                    </th>-->
                     <th>Наименование
                     </th>
                     <th>Общий габарит</th>
@@ -66,29 +66,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td><span class="status status-active">Активен</span></td>
-                    <td class="document-name">Договор №1245 от 15.03.2025</td>
-                    <td class="document-date">26.03.2025 14:30</td>
-                    <td>Договор</td>
-
-
-                </tr>
-                <tr>
-                    <td><span class="status">Черновик</span></td>
-                    <td>Акт</td>
-                    <td>ИП Смирнов А.А.</td>
-                    <td class="document-name">Акт выполненных работ №45</td>
-                    <td class="document-date">25.03.2025 10:15</td>
-
-                </tr>
-                <tr>
-                    <td><span class="status status-active">Активен</span></td>
-                    <td>Счет</td>
-                    <td>ООО "СтройГарант"</td>
-                    <td class="document-name">Счет на оплату №678</td>
-                    <td class="document-date">24.03.2025 16:45</td>
-
+                <tr th:each="sclad : ${scladList}">
+                    <td th:text="${sclad.productForIndividual.name}"></td>
+                    <td th:text="${sclad.productForIndividual.size}"></td>
+                    <td th:text="${sclad.productForIndividual.price}"></td>
+                    <td th:text="${sclad.count}"></td>
                 </tr>
                 </tbody>
             </table>

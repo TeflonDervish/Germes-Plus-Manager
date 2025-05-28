@@ -13,7 +13,7 @@ public enum OrderStatus {
     CANCELLED("Отменен"),
     REFUND("Возврат");
 
-    private String title;
+    private final String title;
 
     OrderStatus(String title) {
         this.title = title;
