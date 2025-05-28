@@ -12,10 +12,10 @@
     <div class="wrapper">
     <header>    
         <div class="nav-and-search">
-            <h1>г. Уфа Торговый центр "Парус"</h1>
+            <h1 th:text="${manager.pointOfSale.name}">г. Уфа Торговый центр "Парус"</h1>
         </div>
         <div class="icons">
-            <a href="#user"> <img height="35px" th:src="@{img/header/user.png}"></a>
+            <a th:href="@{/account}"> <img height="35px" th:src="@{/img/header/user.png}"></a>
         </div>
 
     </header>
@@ -27,21 +27,22 @@
             <a th:href="@{/registration}">Регистрация клиента</a>
             <a th:href="@{/point}">Магазин</a>
                 <div class="logo-container">
-                    <img height="150px" th:src="@{img/body/forLoginRegistration/germes.png}" alt="">
+                    <img height="150px" th:src="@{/img/body/forLoginRegistration/germes.png}" alt="">
                 </div>
         </div>
         
         <div class="center flex_center">
             <div class="contact-info">
-                <h1>Торговый центр "Парус"</h1>
-                <p><strong>Адрес:</strong> г. Уфа, ул. Трамвайная, д. 2, ТЦ "Парус", 1 этаж</p>
-                <p><strong>Телефон:</strong> +7 (123) 456-78-90</p>
-                <p><strong>Email:</strong> info@magazin.ru</p>
-                
+                <h1 th:text="${name}">Торговый центр "Парус"</h1>
+                <p><strong>Адрес:</strong> <span
+                        th:text="${address}">г. Уфа, ул. Трамвайная, д. 2, ТЦ "Парус", 1 этаж</span></p>
+                <p><strong>Телефон:</strong> <span th:text="${phone_number}">+7 (123) 456-78-90</span></p>
+                <p><strong>Email:</strong> <span th:text="${email}">info@magazin.ru</span></p>
+
                 <!-- Координаты для карты (скрытые) -->
-                <div class="coordinates" id="shop-coordinates">55.751574,37.573856</div>
-                <div class="coordinates" id="shop-name">Название магазина</div>
-                <div class="coordinates" id="shop-address">г. Москва, ул. Примерная, д. 123</div>
+                <div th:text="${point_on_the_map}" class="coordinates" id="shop-coordinates">55.751574, 37.573856</div>
+                <div th:text="${name}" class="coordinates" id="shop-name">Название магазина</div>
+                <div th:text="${address}" class="coordinates" id="shop-address">г. Москва, ул. Примерная, д. 123</div>
             </div>
     
             <div class="section">

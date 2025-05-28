@@ -16,13 +16,18 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-//                        .requestMatchers("").permitAll()
-                        .anyRequest().permitAll()
+                        .requestMatchers(
+                                "/style/**",
+                                "/scripts/**",
+                                "/img/**",
+                                "/login/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/catalog", true)
+                        .defaultSuccessUrl("/order", true)
                         .failureUrl("/login")
                         .permitAll()
                 )

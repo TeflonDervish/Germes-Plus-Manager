@@ -14,10 +14,10 @@
 <div class="wrapper">
     <header>
         <div class="nav-and-search">
-            <h1>г. Уфа Торговый центр "Парус"</h1>
+            <h1 th:text="${manager.pointOfSale.name}">г. Уфа Торговый центр "Парус"</h1>
         </div>
         <div class="icons">
-            <a href="#user"> <img height="35px" th:src="@{img/header/user.png}"></a>
+            <a th:href="@{/account}"> <img height="35px" th:src="@{/img/header/user.png}"></a>
         </div>
 
     </header>
@@ -29,7 +29,7 @@
             <a th:href="@{/registration}">Регистрация клиента</a>
             <a th:href="@{/point}">Магазин</a>
             <div class="logo-container">
-                <img height="150px" th:src="@{img/body/forLoginRegistration/germes.png}" alt="">
+                <img height="150px" th:src="@{/img/body/forLoginRegistration/germes.png}" alt="">
             </div>
         </div>
 
@@ -37,8 +37,11 @@
             <header class="header_for_point">
 
                 <div class="search-container">
-                    <input type="text" placeholder="Поиск...">
+                    <form th:action="@{/sclad/search}" method="post">
+                        <input type="text" name="query" placeholder="Поиск...">
+                    </form>
                 </div>
+
 
             </header>
             <table class="documents-table">

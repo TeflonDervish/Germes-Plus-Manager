@@ -19,7 +19,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-public class IndividualPerson implements UserDetails {
+public class IndividualPerson {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,38 +40,4 @@ public class IndividualPerson implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
-    }
 }

@@ -202,10 +202,10 @@
 <div class="wrapper">
     <header>
         <div class="nav-and-search">
-            <h1>г. Уфа Торговый центр "Парус"</h1>
+            <h1 th:text="${manager.pointOfSale.name}">г. Уфа Торговый центр "Парус"</h1>
         </div>
         <div class="icons">
-            <a href="#user"> <img height="35px" th:src="@{img/header/user.png}"></a>
+            <a th:href="@{/account}"> <img height="35px" th:src="@{/img/header/user.png}"></a>
         </div>
 
     </header>
@@ -217,27 +217,26 @@
             <a th:href="@{/registration}">Регистрация клиента</a>
             <a th:href="@{/point}">Магазин</a>
             <div class="logo-container">
-                <img height="150px" th:src="@{img/body/forLoginRegistration/germes.png}" alt="">
+                <img height="150px" th:src="@{/img/body/forLoginRegistration/germes.png}" alt="">
             </div>
         </div>
         <div class="container_zakaz">
             <div class="order-header">
-                <h1>Заказ: Диван "Лорд"</h1>
+                <h1 th:text="'Заказ: ' + ${order.products[0].name}">Заказ: Диван "Лорд"</h1>
                 <div>
-                    <span class="order-number">№ 23456789</span>
+                    <span class="order-number" th:text="'№ ' + ${order.id}">№ 23456789</span>
                 </div>
             </div>
+            <form th:action="@{/order/change-status/{id} (id=${order.id})}" method="post">
             <div class="order-status status-processing" id="statusContainer">
-                <span id="statusText">В обработке</span>
-                <select id="statusSelect" style="display: none;">
-                    <option value="processing">В обработке</option>
-                    <option value="shipped">В доставке</option>
-                    <option value="canceled">Доставлен</option>
-                    <option value="delivered">Оплачен</option>
-                    <option value="canceled">Отменен</option>
-                </select>
-                <button id="changeButton">Изменить</button>
+                    <span id="statusText" th:text="${order.status.title}">В обработке</span>
+                    <select id="statusSelect" style="display: none;" name="status">
+                        <option th:value="${status}" th:each="status : ${status}" th:text="${status.title}">В обработке
+                        </option>
+                    </select>
+                    <button id="changeButton" type="button">Изменить</button>
             </div>
+            </form>
 
             <div class="section">
                 <div class="section-title">Характеристики товара</div>
@@ -251,24 +250,26 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Диван Лорд</td>
+                    <tr th:each="product : ${products}">
+                        <td th:text="${product.name}">Диван Лорд</td>
                         <td>
-                            <p>Габрит: 2400*1008</p>
-                            <p>Механизм: Еврокнижка</p>
+                            <p>Габрит: <span th:text="${product.size}">2400*1008</span></p>
+                            <p>Механизм: <span th:text="${product.mechanism}">Еврокнижка</span></p>
                         </td>
                         <td>1</td>
-                        <td>54 990 ₽</td>
+                        <td th:text="${product.price}">54 990 ₽</td>
                     </tr>
 
                     </tbody>
                 </table>
 
                 <div class="total-summary">
-                    <p>Стоимость товаров: 56 480 ₽</p>
+                    <p th:text="'Стоимость товаров: ' + ${order.totalPrice} + '₽'">Стоимость товаров: 56 480 ₽</p>
                     <p>Стоимость доставки: 500 ₽</p>
                     <p>Стоимость подъема на этаж: 500 ₽</p>
-                    <div style="font-size: 1.2em; margin-top: 5px;">Итого: 56 980 ₽</div>
+                    <div style="font-size: 1.2em; margin-top: 5px;"
+                         th:text="'Итого: ' + (${order.totalPrice} + 500) + '₽'">Итого: 56 980 ₽
+                    </div>
                 </div>
             </div>
 
@@ -276,18 +277,24 @@
                 <div class="column">
                     <div class="section">
                         <div class="section-title">Данные покупателя</div>
-                        <p><strong>ФИО:</strong> Иванов Иван Иванович</p>
-                        <p><strong>Телефон:</strong> +7 (123) 456-78-90</p>
-                        <p><strong>Email:</strong> ivanov@example.com</p>
+                        <p><strong>ФИО:</strong> <span th:text="
+                        ${order.individualPerson.surname} + ' ' +
+                        ${order.individualPerson.name}">Иванов Иван Иванович</span></p>
+                        <p><strong>Телефон:</strong> <span
+                                th:text="${order.individualPerson.phone}">+7 (123) 456-78-90</span></p>
+                        <p><strong>Email:</strong> <span
+                                th:text="${order.individualPerson.email}">ivanov@example.com</span></p>
                     </div>
                 </div>
 
                 <div class="column">
                     <div class="section">
                         <div class="section-title">Получение</div>
-                        <p><strong>Способ получения:</strong> Доставка курьером</p>
-                        <p><strong>Адрес доставки:</strong> г. Москва, ул. Ленина, д. 10, кв. 25</p>
-                        <p><strong>Комментарий:</strong> Позвонить за час до доставки</p>
+                        <p><strong>Способ получения:</strong> <span th:text="${order.deliveryType.title}">Доставка курьером</span>
+                        </p>
+                        <p><strong>Адрес доставки:</strong> <span th:text="${order.deliveryAddress}">г. Москва, ул. Ленина, д. 10, кв. 25</span>
+                        </p>
+                        <!--                        <p><strong>Комментарий:</strong> Позвонить за час до доставки</p>-->
                     </div>
                 </div>
             </div>
@@ -298,10 +305,12 @@
             </div>
 
             <div class="seller-info">
-                <p><strong>Продавец:</strong> ООО "ТехноМир"</p>
-                <p><strong>Ответственный менеджер:</strong> Петрова Мария Сергеевна</p>
-                <p><strong>Контактный телефон:</strong> +7 (495) 123-45-67</p>
-                <p><strong>Email:</strong> sales@technomir.ru</p>
+                <p><strong>Продавец:</strong> <span th:text="${manager.pointOfSale.name}">ООО "ТехноМир"</span></p>
+                <p><strong>Ответственный менеджер:</strong> <span th:text="${manager.surname} + ' ' + ${manager.name}">Петрова Мария Сергеевна</span>
+                </p>
+                <p><strong>Контактный телефон:</strong> <span th:text="${manager.phoneNumber}">+7 (495) 123-45-67</span>
+                </p>
+                <p><strong>Email:</strong> <span th:text="${manager.email}">sales@technomir.ru</span></p>
             </div>
         </div>
     </div>
@@ -309,21 +318,25 @@
 </div>
 
 <script>
-    document.getElementById('changeButton').addEventListener('click', function () {
-        const statusText = document.getElementById('statusText');
-        const statusSelect = document.getElementById('statusSelect');
+    const changeButton = document.getElementById('changeButton');
+    const statusText = document.getElementById('statusText');
+    const statusSelect = document.getElementById('statusSelect');
+    const form = changeButton.closest('form');
 
-        if (statusText.style.display !== 'none') {
-            // Показываем выпадающий список и скрываем текст
+    let editMode = false;
+
+    changeButton.addEventListener('click', function (e) {
+        if (!editMode) {
+            // Первый клик — переход в режим редактирования
             statusText.style.display = 'none';
             statusSelect.style.display = 'inline-block';
-            this.textContent = 'Сохранить';
+            changeButton.textContent = 'Сохранить';
+            editMode = true;
         } else {
-            // Сохраняем изменения, скрываем список и показываем текст
-            statusText.style.display = 'inline';
-            statusText.textContent = statusSelect.options[statusSelect.selectedIndex].text;
-            statusSelect.style.display = 'none';
-            this.textContent = 'Изменить';
+            // Второй клик — отправка формы
+            e.preventDefault(); // Предотврати стандартное поведение
+
+            form.submit(); // Явно отправь форму
         }
     });
 </script>
