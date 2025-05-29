@@ -20,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
+@ToString
 public class PointManager implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

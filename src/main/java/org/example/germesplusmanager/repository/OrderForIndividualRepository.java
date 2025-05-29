@@ -16,4 +16,7 @@ public interface OrderForIndividualRepository extends JpaRepository<OrderForIndi
     List<OrderForIndividual> findByStatus(OrderStatus status);
 
     List<OrderForIndividual> findByDeliveryType(DeliveryType deliveryType);
+
+    List<OrderForIndividual> findByPointOfSale_Id(Long id);
+
 }

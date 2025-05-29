@@ -1,6 +1,7 @@
 package org.example.germesplusmanager.contoller;
 
 import lombok.AllArgsConstructor;
+import org.example.germesplusmanager.enums.Role;
 import org.example.germesplusmanager.model.Sclad;
 import org.example.germesplusmanager.model.persons.PointManager;
 import org.example.germesplusmanager.service.ScladService;
@@ -19,18 +20,23 @@ public class ScladController {
     private ScladService scladService;
 
     @ModelAttribute
-    public void addAttributes(Model model,
-                              @AuthenticationPrincipal PointManager manager) {
+    public void addAttributes(
+            Model model,
+            @AuthenticationPrincipal PointManager manager
+    ) {
         model.addAttribute("manager", manager);
     }
 
     @GetMapping
-    public String sclad(Model model,
-                        @AuthenticationPrincipal PointManager manager) {
+    public String sclad(
+            Model model,
+            @AuthenticationPrincipal PointManager manager
+    ) {
         List<Sclad> sclad = scladService.getByPointOfSale(manager.getPointOfSale());
 
         model.addAttribute("scladList", sclad);
 
+        if (manager.getRole().equals(Role.ADMIN)) return "forGlavMan/sclad";
         return "sclad";
     }
 

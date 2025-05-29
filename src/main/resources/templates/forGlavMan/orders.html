@@ -34,6 +34,7 @@
             <a th:href="@{/sclad}">Товары на складе</a>
             <a th:href="@{/otchet}">Отчетность</a>
             <a th:href="@{/registration}">Регистрация клиента</a>
+            <a th:href="@{/registration/manager}">Регистрация менеджера</a>
             <a th:href="@{/point}">Магазин</a>
             <div class="logo-container">
                 <img height="150px" th:src="@{/img/body/forLoginRegistration/germes.png}" alt="">
@@ -44,6 +45,7 @@
             <a th:href="@{/sclad}">Товары на складе</a>
             <a th:href="@{/otchet}">Отчетность</a>
             <a th:href="@{/registration}">Регистрация клиента</a>
+            <a th:href="@{/registration/manager}">Регистрация менеджера</a>
             <a th:href="@{/point}">Магазин</a>
             <div class="logo-container">
                 <img height="150px" th:src="@{/img/body/forLoginRegistration/germes.png}" alt="">
@@ -53,12 +55,12 @@
         <div class="main-content">
             <header class="header_for_point">
                 <div class="nav-and-search">
-                    <form th:action="@{/otchet/create}">
-                        <button>+ Создать отчет</button>
+                    <form th:action="@{/order/create}">
+                        <button>+ Создать заказ</button>
                     </form>
                 </div>
                 <div class="search-container">
-                    <form th:action="@{/otchet/search}" method="post">
+                    <form th:action="@{/order/search}" method="post">
                         <input type="text" name="query" placeholder="Поиск...">
                     </form>
                 </div>
@@ -67,48 +69,61 @@
             <table class="documents-table">
                 <thead>
                 <tr>
-                    <th>
-                        <span>№</span>
+                    <th class="filter-header">
+                        <span class="filter-icon">Статус</span>
+                        <form th:action="@{/order/status}" method="post">
+                            <div class="filter-dropdown">
+                                <select name="status">
+                                    <option th:each="status : ${status}" th:value="${status}" th:text="${status.title}">
+                                        Ожидает подтверждения
+                                    </option>
+                                </select>
+                                <button type="submit">Применить</button>
+                            </div>
+                        </form>
                     </th>
-                    <th>
-                        <span>Наименование</span>
+                    <th>Номер заказа
                     </th>
-                    <th>
-                        <span>От</span>
+                    <th>Дата заказа</th>
+                    <th>Телефон получателя</th>
+                    <th class="filter-header">
+                        <span class="filter-icon">Способ получения</span>
+                        <form th:action="@{/order/delivery}" method="post">
+                            <div class="filter-dropdown">
+                                <select name="deliveryType">
+                                    <option value="null">Все направления</option>
+                                    <option th:each="deliveryType : ${deliveryType}" th:value="${deliveryType}"
+                                            th:text="${deliveryType.title}">Доставка
+                                    </option>
+                                </select>
+                                <button type="submit">Применить</button>
+                            </div>
+                        </form>
                     </th>
-                    <th><span>До</span></th>
-                    <th><span>Сумма</span></th>
-                    <th><span>Количество заказов</span></th>
+                    <th>Стоимость заказа</th>
                     <th>
-                        <span>Средняя стоимость</span>
+                        Менеджер
                     </th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td><span class="status status-active">Активен</span></td>
-                    <td class="document-name">Договор №1245 от 15.03.2025</td>
-                    <td class="document-date">26.03.2025 14:30</td>
-                    <td>Договор</td>
-                    <td>ООО "ТехноПром"</td>
-
-                    <td>Входящий</td>
-                </tr>
-                <tr>
-                    <td><span class="status">Черновик</span></td>
-                    <td>Акт</td>
-                    <td>ИП Смирнов А.А.</td>
-                    <td class="document-name">Акт выполненных работ №45</td>
-                    <td class="document-date">25.03.2025 10:15</td>
-                    <td>Исходящий</td>
-                </tr>
-                <tr>
-                    <td><span class="status status-active">Активен</span></td>
-                    <td>Счет</td>
-                    <td>ООО "СтройГарант"</td>
-                    <td class="document-name">Счет на оплату №678</td>
-                    <td class="document-date">24.03.2025 16:45</td>
-                    <td>Внутренний</td>
+                <tr th:each="order : ${orders}">
+                    <td><a th:text="${order.status.title}" th:href="@{/order/{id} (id=${order.id})}"></a></td>
+                    <td><a th:text="${order.id}" th:href="@{/order/{id} (id=${order.id})}">321001</a></td>
+                    <td><a th:text="${order.orderDate}" th:href="@{/order/{id} (id=${order.id})}">2025-03-15</a></td>
+                    <td><a th:text="${order.individualPerson.phone}" th:href="@{/order/{id} (id=${order.id})}">+7 999
+                        111-22-33</a></td>
+                    <td><a th:text="${order.deliveryType.title}" th:href="@{/order/{id} (id=${order.id})}">Доставка</a>
+                    </td>
+                    <td><a th:text="${order.totalPrice}" th:href="@{/order/{id} (id=${order.id})}">36 500 ₽</a></td>
+                    <td th:if="${order.pointManager != null}">
+                        <a th:text="${order.pointManager.surname}"
+                           th:href="@{/order/{id}(id=${order.id})}"></a>
+                    </td>
+                    <td th:unless="${order.pointManager != null}">
+                        <a th:text="'Не взято в работу'"
+                           th:href="@{/order/{id}(id=${order.id})}"></a>
+                    </td>
                 </tr>
                 </tbody>
             </table>

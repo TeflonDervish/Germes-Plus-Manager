@@ -21,7 +21,6 @@ public class SecurityConfig {
                                 "/scripts/**",
                                 "/img/**",
                                 "/login/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

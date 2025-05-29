@@ -29,6 +29,7 @@ public class AppConfig {
                 "manager@mail.ru",
                     "Manager",
                     "Name",
+                    "1234567890",
                     passwordEncoder.encode("manager"),
                     Role.USER,
                     point
@@ -38,6 +39,7 @@ public class AppConfig {
                     "admin@mail.ru",
                     "Admin",
                     "Name",
+                    "1234567890",
                     passwordEncoder.encode("admin"),
                     Role.ADMIN,
                     point
@@ -48,6 +50,7 @@ public class AppConfig {
     private void initializeUserIfNotExists(String email,
                                            String surname,
                                            String name,
+                                           String phoneNumber,
                                            String password,
                                            Role role,
                                            PointOfSale pointOfSale) {
@@ -56,6 +59,7 @@ public class AppConfig {
                     .email(email)
                     .surname(surname)
                     .name(name)
+                    .phoneNumber(phoneNumber)
                     .password(password)
                     .role(role)
                     .pointOfSale(pointOfSale)

@@ -34,6 +34,7 @@
             <a th:href="@{/sclad}">Товары на складе</a>
             <a th:href="@{/otchet}">Отчетность</a>
             <a th:href="@{/registration}">Регистрация клиента</a>
+            <a th:href="@{/registration/manager}">Регистрация менеджера</a>
             <a th:href="@{/point}">Магазин</a>
             <div class="logo-container">
                 <img height="150px" th:src="@{/img/body/forLoginRegistration/germes.png}" alt="">
@@ -44,6 +45,7 @@
             <a th:href="@{/sclad}">Товары на складе</a>
             <a th:href="@{/otchet}">Отчетность</a>
             <a th:href="@{/registration}">Регистрация клиента</a>
+            <a th:href="@{/registration/manager}">Регистрация менеджера</a>
             <a th:href="@{/point}">Магазин</a>
             <div class="logo-container">
                 <img height="150px" th:src="@{/img/body/forLoginRegistration/germes.png}" alt="">
@@ -53,62 +55,45 @@
         <div class="main-content">
             <header class="header_for_point">
                 <div class="nav-and-search">
-                    <form th:action="@{/otchet/create}">
-                        <button>+ Создать отчет</button>
+                    <form th:action="@{/create-order_for-fabric}" method="get">
+                        <button>+ Создать заказ</button>
                     </form>
                 </div>
                 <div class="search-container">
-                    <form th:action="@{/otchet/search}" method="post">
+                    <form th:action="@{/sclad/search}" method="post">
                         <input type="text" name="query" placeholder="Поиск...">
                     </form>
                 </div>
+
 
             </header>
             <table class="documents-table">
                 <thead>
                 <tr>
-                    <th>
-                        <span>№</span>
+                    <!--                    <th class="filter-header">-->
+                    <!--                        <span class="filter-icon">Статус</span>-->
+                    <!--                        <div class="filter-dropdown">-->
+                    <!--                            <select>-->
+                    <!--                                <option value="">Все статусы</option>-->
+                    <!--                                <option value="active">В наличии</option>-->
+                    <!--                                <option value="archived">Изготавливается</option>-->
+                    <!--                            </select>-->
+                    <!--                            <button>Применить</button>-->
+                    <!--                        </div>-->
+                    <!--                    </th>-->
+                    <th>Наименование
                     </th>
-                    <th>
-                        <span>Наименование</span>
-                    </th>
-                    <th>
-                        <span>От</span>
-                    </th>
-                    <th><span>До</span></th>
-                    <th><span>Сумма</span></th>
-                    <th><span>Количество заказов</span></th>
-                    <th>
-                        <span>Средняя стоимость</span>
-                    </th>
+                    <th>Общий габарит</th>
+                    <th>Стоимость</th>
+                    <th>Количество</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td><span class="status status-active">Активен</span></td>
-                    <td class="document-name">Договор №1245 от 15.03.2025</td>
-                    <td class="document-date">26.03.2025 14:30</td>
-                    <td>Договор</td>
-                    <td>ООО "ТехноПром"</td>
-
-                    <td>Входящий</td>
-                </tr>
-                <tr>
-                    <td><span class="status">Черновик</span></td>
-                    <td>Акт</td>
-                    <td>ИП Смирнов А.А.</td>
-                    <td class="document-name">Акт выполненных работ №45</td>
-                    <td class="document-date">25.03.2025 10:15</td>
-                    <td>Исходящий</td>
-                </tr>
-                <tr>
-                    <td><span class="status status-active">Активен</span></td>
-                    <td>Счет</td>
-                    <td>ООО "СтройГарант"</td>
-                    <td class="document-name">Счет на оплату №678</td>
-                    <td class="document-date">24.03.2025 16:45</td>
-                    <td>Внутренний</td>
+                <tr th:each="sclad : ${scladList}">
+                    <td th:text="${sclad.productForIndividual.name}"></td>
+                    <td th:text="${sclad.productForIndividual.size}"></td>
+                    <td th:text="${sclad.productForIndividual.price}"></td>
+                    <td th:text="${sclad.count}"></td>
                 </tr>
                 </tbody>
             </table>

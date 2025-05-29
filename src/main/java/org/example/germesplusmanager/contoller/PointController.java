@@ -1,9 +1,8 @@
 package org.example.germesplusmanager.contoller;
 
 import lombok.AllArgsConstructor;
-import org.example.germesplusmanager.model.PointOfSale;
+import org.example.germesplusmanager.enums.Role;
 import org.example.germesplusmanager.model.persons.PointManager;
-import org.example.germesplusmanager.service.PointOfSaleService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,22 +15,16 @@ public class PointController {
 
     @ModelAttribute
     public void addAttributes(Model model,
-                              @AuthenticationPrincipal PointManager manager) {
+                              @AuthenticationPrincipal PointManager manager
+    ) {
         model.addAttribute("manager", manager);
     }
 
     @GetMapping("/point")
     public String getPointInfo(Model model,
-                               @AuthenticationPrincipal PointManager pointManager) {
-
-        PointOfSale point = pointManager.getPointOfSale();
-
-        model.addAttribute("name", point.getName());
-        model.addAttribute("address", point.getAddress());
-        model.addAttribute("point_on_the_map", point.getPointOnTheMap());
-        model.addAttribute("phone_number", point.getPhoneNumber());
-        model.addAttribute("email", point.getEmail());
-
+                               @AuthenticationPrincipal PointManager manager
+    ) {
+        if (manager.getRole().equals(Role.ADMIN)) return "forGlavMan/point_info";
         return "point_info";
     }
 }

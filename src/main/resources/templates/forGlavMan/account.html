@@ -6,19 +6,12 @@
     <title>Документооборот</title>
     <link rel="stylesheet" th:href="@{/style/for_point.css}"/>
     <style>
-
-        .form-group input {
-            height: 20px;
-            width: 480px;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #cccccccc;
-            /* padding-left: 10px; */
-            border-radius: 25px;
-            font-size: 20px;
-            background: rgba(255, 255, 255, 0.651);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
+
 
     </style>
 </head>
@@ -46,6 +39,7 @@
             <a th:href="@{/sclad}">Товары на складе</a>
             <a th:href="@{/otchet}">Отчетность</a>
             <a th:href="@{/registration}">Регистрация клиента</a>
+            <a th:href="@{/registration/manager}">Регистрация менеджера</a>
             <a th:href="@{/point}">Магазин</a>
             <div class="logo-container">
                 <img height="150px" th:src="@{/img/body/forLoginRegistration/germes.png}" alt="">
@@ -56,6 +50,7 @@
             <a th:href="@{/sclad}">Товары на складе</a>
             <a th:href="@{/otchet}">Отчетность</a>
             <a th:href="@{/registration}">Регистрация клиента</a>
+            <a th:href="@{/registration/manager}">Регистрация менеджера</a>
             <a th:href="@{/point}">Магазин</a>
             <div class="logo-container">
                 <img height="150px" th:src="@{/img/body/forLoginRegistration/germes.png}" alt="">
@@ -63,33 +58,36 @@
         </div>
         <div class="client">
             <div class="form_client">
-                <h2>Регистрация клиента</h2>
-                <form th:action="@{/registration/client}" method="POST">
+                <h2>Информация о менеджере</h2>
+                <form action="/login" method="POST">
                     <div class="form-group">
                         <label for="username">Номер телефона:</label>
-                        <input type="text" id="username" name="phoneNumber" required>
+                        <input type="text" id="username" name="username" th:value="${manager.phoneNumber}" required
+                               disabled>
                     </div>
                     <div class="form-group">
                         <label for="username">Email:</label>
-                        <input type="email" id="username" name="email" required>
+                        <input type="text" id="username" name="username" th:value="${manager.email}" required disabled>
                     </div>
                     <div class="form-group">
                         <label for="username">Фамилия:</label>
-                        <input type="text" id="username" name="surname" required>
+                        <input type="text" id="username" name="username" th:value="${manager.surname}" required
+                               disabled>
                     </div>
                     <div class="form-group">
                         <label for="username">Имя:</label>
-                        <input type="text" id="username" name="name" required>
+                        <input type="text" id="username" name="username" th:value="${manager.name}" required disabled>
                     </div>
                     <div class="form-group">
-                        <label for="username">Город:</label>
-                        <input type="text" id="username" name="city" required>
+                        <label for="password">Магазин:</label>
+                        <input type="text" id="password" name="point" th:value="${manager.pointOfSale.name}" required
+                               disabled>
                     </div>
-                    <div class="form-group">
-                        <label for="password">Пароль:</label>
-                        <input type="password" id="password" name="password" required>
-                    </div>
-                    <button type="submit">Зарегистрировать</button>
+
+                    <!--                    <button type="submit">Зарегистрировать</button>-->
+                </form>
+                <form th:action="@{/logout}" method="post">
+                    <button style="background-color: #6e6e6e">Выйти</button>
                 </form>
             </div>
         </div>

@@ -52,14 +52,14 @@
             <div class="contact-info">
                 <h1 th:text="${name}">Торговый центр "Парус"</h1>
                 <p><strong>Адрес:</strong> <span
-                        th:text="${address}">г. Уфа, ул. Трамвайная, д. 2, ТЦ "Парус", 1 этаж</span></p>
-                <p><strong>Телефон:</strong> <span th:text="${phone_number}">+7 (123) 456-78-90</span></p>
-                <p><strong>Email:</strong> <span th:text="${email}">info@magazin.ru</span></p>
+                        th:text="${manager.pointOfSale.address}">г. Уфа, ул. Трамвайная, д. 2, ТЦ "Парус", 1 этаж</span></p>
+                <p><strong>Телефон:</strong> <span th:text="${manager.pointOfSale.phoneNumber}">+7 (123) 456-78-90</span></p>
+                <p><strong>Email:</strong> <span th:text="${manager.pointOfSale.email}">info@magazin.ru</span></p>
 
                 <!-- Координаты для карты (скрытые) -->
-                <div th:text="${point_on_the_map}" class="coordinates" id="shop-coordinates">55.751574, 37.573856</div>
-                <div th:text="${name}" class="coordinates" id="shop-name">Название магазина</div>
-                <div th:text="${address}" class="coordinates" id="shop-address">г. Москва, ул. Примерная, д. 123</div>
+                <div th:text="${manager.pointOfSale.pointOnTheMap}" class="coordinates" id="shop-coordinates">55.751574, 37.573856</div>
+                <div th:text="${manager.pointOfSale.name}" class="coordinates" id="shop-name">Название магазина</div>
+                <div th:text="${manager.pointOfSale.address}" class="coordinates" id="shop-address">г. Москва, ул. Примерная, д. 123</div>
             </div>
     
             <div class="section">
@@ -82,28 +82,28 @@
                 <div id="map" class="map-container"></div>
             </div>
 
-            <div class="reviews center">
-                <h2>Отзывы</h2>
-                <div class="average-rating">
-                    Рейтинг: <span id="averageRating">5</span>/5
-                </div>
-    
-                <div class="reviews-list">
-                    <div class="review">
-                        <div class="review-author">Иван Иванов</div>
-                        <div class="review-rating">★★★★★</div>
-                        <div class="review-text">Отличный продукт! Всё работает как надо.</div>
-                        <div class="review-date">09.02.2025</div>
-                    </div>
-                    <div class="review">
-                        <div class="review-author">Мария Петрова</div>
-                        <div class="review-rating">★★★★★</div>
-                        <div class="review-text">Очень довольна покупкой. Рекомендую!</div>
-                        <div class="review-date">25.02.2025</div>
-                    </div>
-    
-                </div>
-            </div>
+<!--            <div class="reviews center">-->
+<!--                <h2>Отзывы</h2>-->
+<!--                <div class="average-rating">-->
+<!--                    Рейтинг: <span id="averageRating">5</span>/5-->
+<!--                </div>-->
+<!--    -->
+<!--                <div class="reviews-list">-->
+<!--                    <div class="review">-->
+<!--                        <div class="review-author">Иван Иванов</div>-->
+<!--                        <div class="review-rating">★★★★★</div>-->
+<!--                        <div class="review-text">Отличный продукт! Всё работает как надо.</div>-->
+<!--                        <div class="review-date">09.02.2025</div>-->
+<!--                    </div>-->
+<!--                    <div class="review">-->
+<!--                        <div class="review-author">Мария Петрова</div>-->
+<!--                        <div class="review-rating">★★★★★</div>-->
+<!--                        <div class="review-text">Очень довольна покупкой. Рекомендую!</div>-->
+<!--                        <div class="review-date">25.02.2025</div>-->
+<!--                    </div>-->
+<!--    -->
+<!--                </div>-->
+<!--            </div>-->
         </div>
 
         

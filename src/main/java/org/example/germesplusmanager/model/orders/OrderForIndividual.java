@@ -7,6 +7,7 @@ import org.example.germesplusmanager.enums.OrderStatus;
 import org.example.germesplusmanager.model.PointOfSale;
 import org.example.germesplusmanager.model.ShippingInformation;
 import org.example.germesplusmanager.model.persons.IndividualPerson;
+import org.example.germesplusmanager.model.persons.PointManager;
 import org.example.germesplusmanager.model.products.ProductForIndividual;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -36,6 +37,11 @@ public class OrderForIndividual {
     @JoinColumn(name = "point_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private PointOfSale pointOfSale;
+
+    @ManyToOne
+    @JoinColumn(name = "point_manager_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private PointManager pointManager;
 
     @ManyToOne
     @JoinColumn(name = "shipping_id")

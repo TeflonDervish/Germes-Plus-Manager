@@ -5,8 +5,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.example.germesplusmanager.enums.DeliveryType;
 import org.example.germesplusmanager.enums.OrderStatus;
+import org.example.germesplusmanager.model.PointOfSale;
 import org.example.germesplusmanager.model.orders.OrderForIndividual;
 import org.example.germesplusmanager.model.persons.IndividualPerson;
+import org.example.germesplusmanager.model.persons.PointManager;
 import org.example.germesplusmanager.repository.OrderForIndividualRepository;
 import org.hibernate.query.Order;
 import org.springframework.stereotype.Service;
@@ -89,9 +91,10 @@ public class OrderForIndividualService {
         return orderForIndividualRepository.findById(id).orElse(null);
     }
 
-    public OrderForIndividual changeOrderStatus(Long id, OrderStatus status) {
+    public OrderForIndividual changeOrderStatus(Long id, OrderStatus status, PointManager manager) {
         log.info("Смена статуса заказа " + status);
         OrderForIndividual orderForIndividual = getById(id);
+        orderForIndividual.setPointManager(manager);
         orderForIndividual.setStatus(status);
         return save(orderForIndividual);
     }
@@ -104,5 +107,10 @@ public class OrderForIndividualService {
     public List<OrderForIndividual> getByDeliveryType(DeliveryType deliveryType) {
         log.info("Поиск по типу доставки " + deliveryType);
         return orderForIndividualRepository.findByDeliveryType(deliveryType);
+    }
+
+    public List<OrderForIndividual> getByPointOfSale(PointOfSale pointOfSale) {
+        log.info("Выдача заказов для " + pointOfSale.getId());
+        return orderForIndividualRepository.findByPointOfSale_Id(pointOfSale.getId());
     }
 }
