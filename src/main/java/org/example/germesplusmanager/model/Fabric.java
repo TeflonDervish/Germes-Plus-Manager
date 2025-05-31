@@ -2,13 +2,18 @@ package org.example.germesplusmanager.model;
 
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.example.germesplusmanager.model.persons.FabricManager;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-@Entity
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
+@Entity
 @NoArgsConstructor
 public class Fabric {
 
@@ -36,5 +41,10 @@ public class Fabric {
     private String openingHours;
 
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "fabric_manager_id")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    private FabricManager fabricManager;
 
 }

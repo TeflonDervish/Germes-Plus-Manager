@@ -28,7 +28,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login() {
-        return "login_for_point";
+        return "login";
     }
 
     @GetMapping("/registration")

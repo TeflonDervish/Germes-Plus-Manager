@@ -41,11 +41,6 @@ public class IndividualPerson implements UserDetails {
     @Column(length = 20)
     private String city;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
-    @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
