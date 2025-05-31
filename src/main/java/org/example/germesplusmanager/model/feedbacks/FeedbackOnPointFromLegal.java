@@ -1,15 +1,16 @@
 package org.example.germesplusmanager.model.feedbacks;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.example.germesplusmanager.model.PointOfSale;
 import org.example.germesplusmanager.model.persons.LegalPerson;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Data
+@Getter @Setter
+@AllArgsConstructor
+@Builder
 @NoArgsConstructor
 public class FeedbackOnPointFromLegal {
 
@@ -30,6 +31,6 @@ public class FeedbackOnPointFromLegal {
     @Column(columnDefinition = "TEXT")
     private String text;
 
-    private double grade;
+    private Double grade;
 
 }

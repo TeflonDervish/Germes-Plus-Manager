@@ -5,7 +5,6 @@ import lombok.*;
 import org.example.germesplusmanager.enums.DeliveryType;
 import org.example.germesplusmanager.enums.OrderStatus;
 import org.example.germesplusmanager.model.PointOfSale;
-import org.example.germesplusmanager.model.ShippingInformation;
 import org.example.germesplusmanager.model.persons.IndividualPerson;
 import org.example.germesplusmanager.model.persons.PointManager;
 import org.example.germesplusmanager.model.products.ProductForIndividual;
@@ -43,11 +42,6 @@ public class OrderForIndividual {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private PointManager pointManager;
 
-    @ManyToOne
-    @JoinColumn(name = "shipping_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private ShippingInformation shippingInformation;
-
     @ElementCollection
     @CollectionTable(name = "orderForIndividualProduct", joinColumns = @JoinColumn(name = "id"))
     @Column(name = "products")
@@ -63,5 +57,6 @@ public class OrderForIndividual {
     @Enumerated(EnumType.STRING)
     private DeliveryType deliveryType;
 
+    @Column(length = 100)
     private String deliveryAddress;
 }

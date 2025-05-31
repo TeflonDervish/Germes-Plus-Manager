@@ -20,61 +20,53 @@ public class ProductForIndividual {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 60)
+    @Column(length = 100)
     private String name;
 
-    @Column(length = 60)
+    @Column(length = 100)
     private Integer price;
 
-    @Column(length = 60)
+    @Column(length = 100)
     private String size;
 
-    @Column(length = 60)
+    @Column(length = 100)
     private String article;
 
-    @Column(length = 60) // Основа
+    @Column(length = 100) // Основа
     private String basis;
 
-    @Column(length = 60) // Наполнение
+    @Column(length = 100) // Наполнение
     private String filling;
 
-    @Column(length = 60) // Короб
+    @Column(length = 100) // Короб
     private String box;
 
-    @Column(length = 60) // Механизм
+    @Column(length = 100) // Механизм
     private String mechanism;
 
-    @Column(length = 60) // Подлокотники
+    @Column(length = 100) // Подлокотники
     private String armrests;
 
-    @Column(length = 60) // Глубина сидушки
+    @Column(length = 100) // Глубина сидушки
     private String seatDepth;
 
-    @Column(length = 60) // Посадка
+    @Column(length = 100) // Посадка
     private String planting;
 
-    @Column(length = 60) // Общий габарит
-    private String overallDimensions;
-
-    @Column(length = 60) // Спальное место
+    @Column(length = 100) // Спальное место
     private String sleepingSpace;
   
-    @Column(length = 60) // Глубина
+    @Column(length = 100) // Глубина
     private String depth;
 
-    @Column(length = 60) // Конфигурация
+    @Column(length = 100) // Конфигурация
     private String configuration;
-
-
 
     @Lob
     private String description;
 
-    @Column(columnDefinition = "json")
-    private String characteristics;
-
     @ElementCollection
-    @CollectionTable(name="urls", joinColumns = @JoinColumn(name="id"))
+    @CollectionTable(name="urlsForProductForIndividuals", joinColumns = @JoinColumn(name="id"))
     @Column(name = "urls")
     private List<String> urls;
 

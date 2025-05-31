@@ -4,10 +4,10 @@ package org.example.germesplusmanager.model.orders;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.germesplusmanager.enums.OrderStatus;
-import org.example.germesplusmanager.model.PointOfSale;
+import org.example.germesplusmanager.model.Fabric;
+import org.example.germesplusmanager.model.persons.FabricManager;
 import org.example.germesplusmanager.model.persons.LegalPerson;
-import org.example.germesplusmanager.model.summaries.SummaryForLegal;
+import org.example.germesplusmanager.model.products.ProductForLegal;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -17,27 +17,30 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class OrderForLegal {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "orderForLegal")
-    private List<SummaryForLegal> summaryForLegals;
-
     @ManyToOne
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "legal_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private LegalPerson legalPerson;
 
+    @ElementCollection
+    @CollectionTable(name = "orderForLegalProduct", joinColumns = @JoinColumn(name = "id"))
+    @Column(name = "products")
+    private List<ProductForLegal> products;
+
+    private Integer totalPrice;
+
     @ManyToOne
-    @JoinColumn(name = "point_id")
+    @JoinColumn(name = "fabric_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private PointOfSale pointOfSale;
+    private Fabric fabric;
 
-    private Integer price;
-
-    @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    @ManyToOne
+    @JoinColumn(name = "fabric_manager_order_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private FabricManager fabricManager;
 
 }

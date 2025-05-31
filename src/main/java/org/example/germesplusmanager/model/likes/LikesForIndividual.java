@@ -1,25 +1,29 @@
-package org.example.germesplusmanager.model;
+package org.example.germesplusmanager.model.likes;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.example.germesplusmanager.model.persons.IndividualPerson;
 import org.example.germesplusmanager.model.products.ProductForIndividual;
 
 @Entity
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
 @NoArgsConstructor
-public class Likes {
+public class LikesForIndividual {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(nullable = false)
     private IndividualPerson individualPerson;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(nullable = false)
     private ProductForIndividual productForIndividual;
 }

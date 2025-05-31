@@ -1,15 +1,19 @@
 package org.example.germesplusmanager.model.feedbacks;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.example.germesplusmanager.model.PointOfSale;
 import org.example.germesplusmanager.model.persons.IndividualPerson;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Data
+@Setter
+@Getter
+@AllArgsConstructor
 @NoArgsConstructor
 public class FeedbackOnPointFromIndividual {
 

@@ -41,11 +41,16 @@ public class ScladController {
     }
 
     @PostMapping("/search")
-    public String search(@RequestParam String query, Model model) {
+    public String search(
+            @RequestParam String query,
+            Model model,
+            @AuthenticationPrincipal PointManager manager
+    ) {
         List<Sclad> sclads = scladService.getByProductName(query);
 
         model.addAttribute("scladList", sclads);
 
+        if (manager.getRole().equals(Role.ADMIN)) return "forGlavMan/sclad";
         return "sclad";
     }
 }

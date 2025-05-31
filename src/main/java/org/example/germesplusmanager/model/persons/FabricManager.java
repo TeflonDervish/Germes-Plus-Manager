@@ -1,10 +1,9 @@
 package org.example.germesplusmanager.model.persons;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.germesplusmanager.enums.Role;
-import org.example.germesplusmanager.model.PointOfSale;
+import org.example.germesplusmanager.model.Fabric;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,11 +16,10 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
-@ToString
-public class PointManager implements UserDetails {
+public class FabricManager implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
@@ -47,9 +45,9 @@ public class PointManager implements UserDetails {
     private Role role;
 
     @ManyToOne
-    @JoinColumn(name = "point_id")
+    @JoinColumn(name = "fabric_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private PointOfSale pointOfSale;
+    private Fabric fabric;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -60,4 +58,5 @@ public class PointManager implements UserDetails {
     public String getUsername() {
         return email;
     }
+
 }

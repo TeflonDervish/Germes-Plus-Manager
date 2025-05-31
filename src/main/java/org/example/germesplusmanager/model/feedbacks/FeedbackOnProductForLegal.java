@@ -1,15 +1,19 @@
 package org.example.germesplusmanager.model.feedbacks;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.example.germesplusmanager.model.persons.LegalPerson;
 import org.example.germesplusmanager.model.products.ProductForLegal;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.List;
+
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class FeedbackOnProductForLegal {
 
@@ -30,6 +34,11 @@ public class FeedbackOnProductForLegal {
     @Column(columnDefinition = "TEXT")
     private String text;
 
-    private double grade;
+    private Double grade;
+
+    @ElementCollection
+    @CollectionTable(name="urlsFeedbackForProductForLegal", joinColumns = @JoinColumn(name="id"))
+    @Column(name = "urls")
+    private List<String> urls;
 
 }

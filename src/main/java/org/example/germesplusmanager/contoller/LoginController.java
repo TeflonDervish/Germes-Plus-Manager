@@ -1,14 +1,11 @@
 package org.example.germesplusmanager.contoller;
 
 import lombok.AllArgsConstructor;
-import org.example.germesplusmanager.dto.IndividualPersonRegisterDto;
 import org.example.germesplusmanager.enums.Role;
 import org.example.germesplusmanager.model.persons.IndividualPerson;
 import org.example.germesplusmanager.model.persons.PointManager;
 import org.example.germesplusmanager.service.IndividualPersonService;
 import org.example.germesplusmanager.service.PointManagerService;
-import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

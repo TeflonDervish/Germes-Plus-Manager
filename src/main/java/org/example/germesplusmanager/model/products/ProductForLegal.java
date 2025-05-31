@@ -1,15 +1,17 @@
 package org.example.germesplusmanager.model.products;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+import org.example.germesplusmanager.enums.LegalProductType;
+
+import java.util.List;
 
 
 @Entity
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@Builder
 @NoArgsConstructor
 public class ProductForLegal {
 
@@ -18,4 +20,32 @@ public class ProductForLegal {
     private Long id;
 
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    private LegalProductType type;
+
+    @Column(length = 100)
+    private String typeCloth;
+    @Column(length = 100)
+    private Integer durability;
+    @Column(length = 100)
+    private String color;
+
+    @Column(length = 100)
+    private String configuration;
+    @Column(length = 100)
+    private String gabarit;
+
+    @Column(length = 100)
+    private String typeFill;
+    @Column(length = 100)
+    private String density;
+
+    @ElementCollection
+    @CollectionTable(name="urlsForProductForLegal", joinColumns = @JoinColumn(name="id"))
+    @Column(name = "urls")
+    private List<String> urls;
+
+
+
 }

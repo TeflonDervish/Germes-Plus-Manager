@@ -95,6 +95,7 @@ public class OrderForIndividualService {
         log.info("Смена статуса заказа " + status);
         OrderForIndividual orderForIndividual = getById(id);
         orderForIndividual.setPointManager(manager);
+        orderForIndividual.setPointOfSale(manager.getPointOfSale());
         orderForIndividual.setStatus(status);
         return save(orderForIndividual);
     }
