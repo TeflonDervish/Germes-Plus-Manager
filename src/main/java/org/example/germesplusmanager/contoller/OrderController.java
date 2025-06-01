@@ -12,6 +12,7 @@ import org.example.germesplusmanager.model.persons.PointManager;
 import org.example.germesplusmanager.model.products.ProductForIndividual;
 import org.example.germesplusmanager.service.OrderForIndividualService;
 import org.example.germesplusmanager.service.PointOfSaleService;
+import org.example.germesplusmanager.service.ProductForIndividualService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,12 +29,14 @@ public class OrderController {
     private static final Log log = LogFactory.getLog(OrderController.class);
     private final OrderForIndividualService orderForIndividualService;
     private final PointOfSaleService pointOfSaleService;
+    private final ProductForIndividualService productForIndividualService;
 
     @ModelAttribute
     public void addAttributes(
             Model model,
             @AuthenticationPrincipal PointManager manager
     ) {
+        model.addAttribute("products", productForIndividualService.getAll());
         model.addAttribute("manager", manager);
 
         model.addAttribute("status",
@@ -48,7 +51,12 @@ public class OrderController {
             @AuthenticationPrincipal PointManager manager
     ) {
         List<OrderForIndividual> orders = orderForIndividualService.getByPointOfSale(manager.getPointOfSale());
-        orders.addAll(orderForIndividualService.getByDeliveryType(DeliveryType.DELIVERY));
+
+        for (OrderForIndividual order : orderForIndividualService.getByDeliveryType(DeliveryType.DELIVERY)) {
+            if (!orders.contains(order)) {
+                orders.add(order);
+            }
+        }
 
         model.addAttribute("orders", orders);
         model.addAttribute("deliveryType", DeliveryType.values());
