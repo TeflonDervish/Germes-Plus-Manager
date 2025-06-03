@@ -141,4 +141,8 @@ public class OrderForIndividualService {
             order.setPointOfSale(pointOfSaleService.getById(orderDto.getPointId()));
         return orderForIndividualRepository.save(order);
     }
+
+    public List<OrderForIndividual> getByDateBetween(LocalDate startDate, LocalDate endDate) {
+        return orderForIndividualRepository.findByOrderDateBetween(startDate, endDate);
+    }
 }
