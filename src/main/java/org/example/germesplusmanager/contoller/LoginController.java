@@ -57,7 +57,7 @@ public class LoginController {
     ) {
         pointManagerService.createManager(reg, manager);
         if (manager.getRole().equals(Role.ADMIN)) return "forGlavMan/registration_manager";
-        return "redirect:/registration";
+        return "redirect:/order";
     }
 
     @PostMapping("/registration/client")
@@ -65,7 +65,7 @@ public class LoginController {
             @ModelAttribute IndividualPerson individualPerson
     ) {
         individualPersonService.registerIndividualPerson(individualPerson);
-        return "client_registration";
+        return "redirect:/order";
     }
 
 //    @PostMapping("registration/")
