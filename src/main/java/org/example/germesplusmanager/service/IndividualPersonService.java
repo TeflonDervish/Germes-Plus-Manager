@@ -52,4 +52,9 @@ public class IndividualPersonService {
         log.info("Получение пользователя по id");
         return individualPersonRepository.findById(id).orElse(null);
     }
+
+    public IndividualPerson getByEmail(String email) {
+        log.info("Получение пользователя по email " + email);
+        return individualPersonRepository.findByEmail(email).orElse(null);
+    }
 }

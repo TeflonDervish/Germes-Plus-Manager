@@ -8,6 +8,28 @@
     padding-right: calc(50% - 600px);
 }
 
+.select-germes {
+    /* height: 20px; */
+    width: 70%;
+    appearance: none;
+    padding: 10px 20px;
+    margin-top: 5px;
+    border: 1px solid #cccccccc;
+    border-radius: 25px;
+    font-size: 20px;
+    background: rgba(255, 255, 255, 0.651);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.add-product {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 15px;
+}
+
 a {
     all: unset;
     color: inherit;

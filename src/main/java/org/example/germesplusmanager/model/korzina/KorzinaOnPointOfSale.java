@@ -5,8 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.example.germesplusmanager.model.persons.IndividualPerson;
+import org.example.germesplusmanager.model.persons.PointManager;
 import org.example.germesplusmanager.model.products.ProductForIndividual;
+import org.example.germesplusmanager.model.products.ProductForLegal;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 
@@ -15,20 +18,21 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @NoArgsConstructor
-public class KorzinaForIndividual {
+public class KorzinaOnPointOfSale {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false, unique = true)
-    private IndividualPerson individualPerson;
-
     @ElementCollection
-    @CollectionTable(name = "korzinaProduct", joinColumns = @JoinColumn(name = "id"))
+    @CollectionTable(name = "korzinaProductOnPoint", joinColumns = @JoinColumn(name = "id"))
     @Column(name = "products")
     private List<ProductForIndividual> products;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "point_manager_id")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    private PointManager pointManager;
 
     public void addProduct(ProductForIndividual product) {
         products.add(product);
@@ -41,4 +45,14 @@ public class KorzinaForIndividual {
     public boolean isInKorzina(ProductForIndividual product) {
         return products.contains(product);
     }
+
+    public Integer getTotalPrice() {
+        Integer totalPrice = 0;
+        for (ProductForIndividual product : products) {
+            totalPrice += product.getPrice();
+        }
+        return totalPrice;
+    }
+
+
 }

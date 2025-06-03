@@ -3,9 +3,11 @@ package org.example.germesplusmanager.service;
 import lombok.AllArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.example.germesplusmanager.dto.OrderForIndividualDto;
 import org.example.germesplusmanager.enums.DeliveryType;
 import org.example.germesplusmanager.enums.OrderStatus;
 import org.example.germesplusmanager.model.PointOfSale;
+import org.example.germesplusmanager.model.korzina.KorzinaOnPointOfSale;
 import org.example.germesplusmanager.model.orders.OrderForIndividual;
 import org.example.germesplusmanager.model.persons.IndividualPerson;
 import org.example.germesplusmanager.model.persons.PointManager;
@@ -13,6 +15,8 @@ import org.example.germesplusmanager.repository.OrderForIndividualRepository;
 import org.hibernate.query.Order;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,6 +26,11 @@ public class OrderForIndividualService {
     private static final Log log = LogFactory.getLog(OrderForIndividualService.class);
 
     private final OrderForIndividualRepository orderForIndividualRepository;
+
+    private final KorzinaOnPointService korzinaOnPointService;
+
+    private final PointOfSaleService pointOfSaleService;
+
 //    private final KorzinaService korzinaService;
 //    private final PointOfSaleService pointOfSaleService;
 
@@ -113,5 +122,23 @@ public class OrderForIndividualService {
     public List<OrderForIndividual> getByPointOfSale(PointOfSale pointOfSale) {
         log.info("Выдача заказов для " + pointOfSale.getId());
         return orderForIndividualRepository.findByPointOfSale_Id(pointOfSale.getId());
+    }
+
+    public OrderForIndividual createOrder(OrderForIndividualDto orderDto, IndividualPerson individualPerson, PointManager manager) {
+        log.info("Создание заказа");
+        KorzinaOnPointOfSale korzina = korzinaOnPointService.getKorzina(manager);
+        OrderForIndividual order = OrderForIndividual.builder()
+                .deliveryType(orderDto.equals("delivery") ? DeliveryType.DELIVERY : DeliveryType.PICKUP)
+                .orderDate(LocalDate.now())
+                .individualPerson(individualPerson)
+                .products(new ArrayList<>(korzina.getProducts()))
+                .totalPrice(korzina.getTotalPrice())
+                .status(OrderStatus.WAITING_ACCESS).build();
+        korzina.getProducts().clear();
+        if (orderDto.getDeliveryType().equals("delivery"))
+            order.setDeliveryAddress(orderDto.getCity() + " " + orderDto.getAddress());
+        else
+            order.setPointOfSale(pointOfSaleService.getById(orderDto.getPointId()));
+        return orderForIndividualRepository.save(order);
     }
 }

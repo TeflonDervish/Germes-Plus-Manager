@@ -3,7 +3,6 @@ package org.example.germesplusmanager.service;
 import lombok.AllArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.example.germesplusmanager.dto.FilterProductForIndividual;
 import org.example.germesplusmanager.model.products.ProductForIndividual;
 import org.example.germesplusmanager.repository.ProductForIndividualRepository;
 import org.springframework.stereotype.Service;
@@ -33,17 +32,6 @@ public class ProductForIndividualService {
         return productForIndividualRepository.findByNameContainingIgnoreCase(search);
     }
 
-    public List<ProductForIndividual> getFilteredProducts(FilterProductForIndividual filter) {
-        log.info("Фильтрация продуктов");
-        log.info(filter.toString());
-        return productForIndividualRepository.findWithFilters(
-                filter.getMinPrice(),
-                filter.getMaxPrice(),
-                filter.getConfigurations(),
-                filter.getMechanisms(),
-                filter.getFillings()
-        );
-    }
 
 
     public List<ProductForIndividual> getBySort(String sort) {
