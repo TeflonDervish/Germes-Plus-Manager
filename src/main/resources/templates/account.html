@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Аккаунт</title>
     <link rel="stylesheet" th:href="@{/style/for_point.css}"/>
+    <link rel="stylesheet" th:href="@{/style/for_admin.css}"/>
     <style>
         .form-group {
             display: flex;
@@ -60,7 +61,8 @@
                 <form action="/login" method="POST">
                     <div class="form-group">
                         <label for="username">Номер телефона:</label>
-                        <input type="text" id="username" name="username" th:value="${manager.phoneNumber}" required disabled>
+                        <input type="text" id="username" name="username" th:value="${manager.phoneNumber}" required
+                               disabled>
                     </div>
                     <div class="form-group">
                         <label for="username">Email:</label>
@@ -68,7 +70,8 @@
                     </div>
                     <div class="form-group">
                         <label for="username">Фамилия:</label>
-                        <input type="text" id="username" name="username" th:value="${manager.surname}" required disabled>
+                        <input type="text" id="username" name="username" th:value="${manager.surname}" required
+                               disabled>
                     </div>
                     <div class="form-group">
                         <label for="username">Имя:</label>
@@ -76,10 +79,11 @@
                     </div>
                     <div class="form-group">
                         <label for="password">Магазин:</label>
-                        <input type="text" id="password" name="point" th:value="${manager.pointOfSale.name}" required disabled>
+                        <input type="text" id="password" name="point" th:value="${manager.pointOfSale.name}" required
+                               disabled>
                     </div>
 
-<!--                    <button type="submit">Зарегистрировать</button>-->
+                    <!--                    <button type="submit">Зарегистрировать</button>-->
                 </form>
                 <form th:action="@{/logout}" method="post">
                     <button style="background-color: #6e6e6e">Выйти</button>

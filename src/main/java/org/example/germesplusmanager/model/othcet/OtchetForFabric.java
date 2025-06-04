@@ -28,14 +28,20 @@ public class OtchetForFabric {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    @ElementCollection
-    @CollectionTable(name = "otchetForFabricIndividual", joinColumns = @JoinColumn(name = "id"))
-    @Column(name = "products")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "otchets_for_fabric_individual",
+            joinColumns = @JoinColumn(name = "otchet_id"),
+            inverseJoinColumns = @JoinColumn(name = "order_id")
+    )
     private List<ProductForIndividual> productsForIndividuals;
 
-    @ElementCollection
-    @CollectionTable(name = "otchetForFabricLegal", joinColumns = @JoinColumn(name = "id"))
-    @Column(name = "products")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "otchets_for_fabric_legal",
+            joinColumns = @JoinColumn(name = "otchet_id"),
+            inverseJoinColumns = @JoinColumn(name = "order_id")
+    )
     private List<ProductForLegal> productsForLegals;
 
     @ManyToOne

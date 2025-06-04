@@ -1,6 +1,8 @@
 package org.example.germesplusmanager.service;
 
 import lombok.AllArgsConstructor;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.example.germesplusmanager.dto.OtchetDto;
 import org.example.germesplusmanager.model.PointOfSale;
 import org.example.germesplusmanager.model.orders.OrderForIndividual;
@@ -9,13 +11,13 @@ import org.example.germesplusmanager.model.persons.PointManager;
 import org.example.germesplusmanager.repository.OtchetForPointRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class OtchetForPointService {
 
+    private static final Log log = LogFactory.getLog(OtchetForPointService.class);
     private final OtchetForPointRepository otchetForPointRepository;
     private final OrderForIndividualService orderForIndividualService;
 
@@ -29,7 +31,14 @@ public class OtchetForPointService {
 
     public OtchetForPoint createOtchet(PointManager pointManager, OtchetDto otchetDto) {
         OtchetForPoint otchet = new OtchetForPoint();
-        List<OrderForIndividual> orders = orderForIndividualService.getByPointOfSale(pointManager.getPointOfSale());
+        List<OrderForIndividual> orders = orderForIndividualService
+                .getByDateBetween(
+                        otchetDto.getStartDate(),
+                        otchetDto.getEndDate(),
+                        pointManager.getPointOfSale());
+
+        otchet.setStartDate(otchetDto.getStartDate());
+        otchet.setEndDate(otchetDto.getEndDate());
 
         otchet.setPointOfSale(pointManager.getPointOfSale());
         otchet.setDescription(otchetDto.getDescription());
@@ -45,4 +54,12 @@ public class OtchetForPointService {
     }
 
 
+    public List<OtchetForPoint> getByPointOfSaleAndNameContains(PointOfSale pointOfSale, String query) {
+        return otchetForPointRepository.findByPointOfSaleIdAndNameContaining(pointOfSale.getId(), query);
+    }
+
+    public void deleteById(Long id) {
+        log.info("Удаление отчета");
+        otchetForPointRepository.deleteById(id);
+    }
 }

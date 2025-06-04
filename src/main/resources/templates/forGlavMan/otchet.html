@@ -70,48 +70,24 @@
             <table class="documents-table">
                 <thead>
                 <tr>
-                    <th>
-                        <span>№</span>
-                    </th>
-                    <th>
-                        <span>Наименование</span>
-                    </th>
-                    <th>
-                        <span>От</span>
-                    </th>
+                    <th><span>№</span></th>
+                    <th><span>Наименование</span></th>
+                    <th><span>От</span></th>
                     <th><span>До</span></th>
                     <th><span>Сумма</span></th>
                     <th><span>Количество заказов</span></th>
-                    <th>
-                        <span>Средняя стоимость</span>
-                    </th>
+                    <th><span>Средняя стоимость</span></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td><span class="status status-active">Активен</span></td>
-                    <td class="document-name">Договор №1245 от 15.03.2025</td>
-                    <td class="document-date">26.03.2025 14:30</td>
-                    <td>Договор</td>
-                    <td>ООО "ТехноПром"</td>
-
-                    <td>Входящий</td>
-                </tr>
-                <tr>
-                    <td><span class="status">Черновик</span></td>
-                    <td>Акт</td>
-                    <td>ИП Смирнов А.А.</td>
-                    <td class="document-name">Акт выполненных работ №45</td>
-                    <td class="document-date">25.03.2025 10:15</td>
-                    <td>Исходящий</td>
-                </tr>
-                <tr>
-                    <td><span class="status status-active">Активен</span></td>
-                    <td>Счет</td>
-                    <td>ООО "СтройГарант"</td>
-                    <td class="document-name">Счет на оплату №678</td>
-                    <td class="document-date">24.03.2025 16:45</td>
-                    <td>Внутренний</td>
+                <tr th:each="otchet : ${otchets}">
+                    <td><a th:text="${otchet.id}" th:href="@{/otchet/{id} (id=${otchet.id})}"></a></td>
+                    <td><a th:text="${otchet.name}" th:href="@{/otchet/{id} (id=${otchet.id})}"></a></td>
+                    <td><a th:text="${otchet.startDate}" th:href="@{/otchet/{id} (id=${otchet.id})}"></a></td>
+                    <td><a th:text="${otchet.endDate}" th:href="@{/otchet/{id} (id=${otchet.id})}"></a></td>
+                    <td><a th:text="${otchet.totalPrice}" th:href="@{/otchet/{id} (id=${otchet.id})}"></a></td>
+                    <td><a th:text="${otchet.count}" th:href="@{/otchet/{id} (id=${otchet.id})}"></a></td>
+                    <td><a th:text="${otchet.meanPrice}" th:href="@{/otchet/{id} (id=${otchet.id})}"></a></td>
                 </tr>
                 </tbody>
             </table>

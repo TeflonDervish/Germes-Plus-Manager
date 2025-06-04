@@ -10,6 +10,7 @@ import org.example.germesplusmanager.model.products.ProductForIndividual;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -24,9 +25,12 @@ public class OrderForFabric {
     @Column(nullable = false)
     private Long id;
 
-    @ElementCollection
-    @CollectionTable(name = "orderForFabricProducts", joinColumns = @JoinColumn(name = "id"))
-    @Column(name = "products")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "order_for_fabric_product",
+            joinColumns = @JoinColumn(name = "order_ir"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
     private List<ProductForIndividual> products;
 
     private Integer totalPrice;
@@ -46,8 +50,8 @@ public class OrderForFabric {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private FabricManager fabricManager;
 
-    private Integer price;
-
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    private LocalDate orderDate;
 }

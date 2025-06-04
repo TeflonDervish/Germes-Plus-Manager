@@ -439,7 +439,7 @@
 
                 <div class="form-section">
                     <div class="section-title">Товары</div>
-                    <form th:action="@{/korzina/add}" method="post">
+                    <form th:action="@{/korzina/fabric/add}" method="post">
                         <div class="add-product">
                             <select name="productId" class="select-germes">
                                 <option th:each="product : ${products}"
@@ -467,7 +467,7 @@
                                 <input type="number" name="productPrice[]" min="0" step="0.01" required disabled>
                             </td>
                             <td>
-                                <form th:action="@{/korzina/delete/{id} (id=${product.id})}" method="post">
+                                <form th:action="@{/korzina/fabric/delete/{id} (id=${product.id})}" method="post">
                                     <button type="submit" class="btn btn-danger">Удалить</button>
                                 </form>
                             </td>
@@ -476,95 +476,24 @@
                     </table>
 
                     <div class="total-summary">
-                        <div>Стоимость товаров: <span id="productsTotal" th:text="${totalPrice} + ' руб.'">50 000</span></div>
+                        <div>Стоимость товаров: <span id="productsTotal" th:text="${korzina.totalPrice} + ' руб.'">50 000</span>
+                        </div>
                         <div>Стоимость доставки: <span id="deliveryCost">800</span> руб.</div>
                         <div style="font-size: 1.2em; margin-top: 5px;">Итого: <span id="orderTotal"
-                                                                                     th:text="${totalPrice} + 800 + ' руб.'">50 800</span>
+                                                                                     th:text="${korzina.totalPrice} + 800 + ' руб.'">50 800</span>
                         </div>
                     </div>
                 </div>
-                <form th:action="@{/order/create}" method="post">
-                    <div class="form-section">
-                        <div class="section-title">Данные покупателя</div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="customerName">Фамилия</label>
-                                <input type="text" id="customerName" name="surname" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="customerName">Имя</label>
-                                <input type="text" id="customerName" name="name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="customerPhone">Телефон</label>
-                                <input type="tel" id="customerPhone" name="phone" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="customerPhone">Email</label>
-                                <input type="tel" id="customerPhone" name="email" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <div class="section-title">Доставка</div>
-                        <div class="delivery-options">
-                            <div class="checkboxForm">
-                                <input type="radio" id="deliveryType1" name="deliveryType" value="delivery" checked>
-                                <label for="deliveryType1">Доставка</label>
-                            </div>
-                            <div class="checkboxForm">
-                                <input type="radio" id="deliveryType2" name="deliveryType" value="pickup">
-                                <label for="deliveryType2">Самовывоз</label>
-                            </div>
-                        </div>
-
-                        <div id="deliveryFields">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="deliveryAddress">Населенный пункт:</label>
-                                    <input type="text" id="deliveryAddress" name="deliveryAddress">
-                                </div>
-                                <div class="form-group">
-                                    <label for="deliveryAddress">Улица:</label>
-                                    <input type="text" id="deliveryAddress" name="deliveryAddress">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="checkboxForm">
-                                    <input type="checkbox" id="lifting" name="lifting">
-                                    <label for="lifting">Нужен подъем на этаж</label>
-                                </div>
-                            </div>
-
-                            <div id="lifting-details" class="lifting-details" style="display: none;">
-                                <div class="form-group">
-                                    <label for="floor">Этаж:</label>
-                                    <input type="number" id="floor" name="floor" min="1">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="elevator">Грузовой лифт:</label>
-                                    <select id="elevator" name="elevator">
-                                        <option value="yes">Есть</option>
-                                        <option value="no">Нет</option>
-                                        <option value="small">Есть пассажирский</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="pickupFields" class="hidden">
-                            <div class="form-group">
-                                <label for="pickupPoint">Пункт самовывоза</label>
-                                <select id="pickupPoint" name="pointId">
-                                    <option th:each="point : ${points}" th:value="${point.id}" th:text="${point.name}">
-                                        Склад
-                                        №1 (ул. Центральная, 10)
-                                    </option>
-
-                                </select>
-                            </div>
+                <form th:action="@{/order/fabric/create}" method="post">
+                    <div id="pickupFields" class="hidden">
+                        <div class="form-group">
+                            <label for="pickupPoint">Пункт самовывоза</label>
+                            <select id="pickupPoint" name="fabricId">
+                                <option th:each="fabric : ${fabrics}" th:value="${fabric.id}" th:text="${fabric.name}">
+                                    Склад
+                                    №1 (ул. Центральная, 10)
+                                </option>
+                            </select>
                         </div>
                     </div>
 
@@ -597,26 +526,13 @@
 </div>
 <script>
     // Показать/скрыть детали подъема
-    const liftingCheckbox = document.getElementById('lifting');
-    const liftingDetails = document.getElementById('lifting-details');
+    // const liftingCheckbox = document.getElementById('lifting');
+    // const liftingDetails = document.getElementById('lifting-details');
 
-    liftingCheckbox.addEventListener('change', function () {
-        liftingDetails.style.display = this.checked ? 'block' : 'none';
-    });
-    // Переключение между доставкой и самовывозом
-    document.querySelectorAll('input[name="deliveryType"]').forEach(radio => {
-        radio.addEventListener('change', function () {
-            if (this.value === 'delivery') {
-                document.getElementById('deliveryFields').classList.remove('hidden');
-                document.getElementById('pickupFields').classList.add('hidden');
-            } else {
-                document.getElementById('deliveryFields').classList.add('hidden');
-                document.getElementById('pickupFields').classList.remove('hidden');
-                document.getElementById('deliveryCostInput').value = '0';
-                updateTotals();
-            }
-        });
-    });
+    // liftingCheckbox.addEventListener('change', function () {
+    //     liftingDetails.style.display = this.checked ? 'block' : 'none';
+    // });
+
 
     // // Добавление нового товара
     // document.getElementById('addProduct').addEventListener('click', function () {

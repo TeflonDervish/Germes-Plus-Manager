@@ -3,15 +3,14 @@ package org.example.germesplusmanager.service;
 import lombok.AllArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.example.germesplusmanager.dto.OrderForIndividualDto;
-import org.example.germesplusmanager.enums.DeliveryType;
 import org.example.germesplusmanager.enums.OrderStatus;
+import org.example.germesplusmanager.model.Fabric;
 import org.example.germesplusmanager.model.PointOfSale;
-import org.example.germesplusmanager.model.korzina.KorzinaOnPointOfSale;
+import org.example.germesplusmanager.model.korzina.KorzinaOnPointForFabric;
+import org.example.germesplusmanager.model.orders.OrderForFabric;
 import org.example.germesplusmanager.model.orders.OrderForIndividual;
-import org.example.germesplusmanager.model.persons.IndividualPerson;
 import org.example.germesplusmanager.model.persons.PointManager;
-import org.example.germesplusmanager.repository.OrderForIndividualRepository;
+import org.example.germesplusmanager.repository.OrderForFabricRepository;
 import org.hibernate.query.Order;
 import org.springframework.stereotype.Service;
 
@@ -21,15 +20,15 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class OrderForIndividualService {
+public class OrderForFabricService {
 
-    private static final Log log = LogFactory.getLog(OrderForIndividualService.class);
+    private static final Log log = LogFactory.getLog(OrderForFabricService.class);
 
-    private final OrderForIndividualRepository orderForIndividualRepository;
+    private final OrderForFabricRepository orderForFabricRepository;
 
-    private final KorzinaOnPointService korzinaOnPointService;
+    private final KorzinaOnPointForFabricService korzinaOnPointForFabricService;
 
-    private final PointOfSaleService pointOfSaleService;
+    private final FabricService fabricService;
 
 //    private final KorzinaService korzinaService;
 //    private final PointOfSaleService pointOfSaleService;
@@ -81,68 +80,57 @@ public class OrderForIndividualService {
 //        order.setOrderDate(details.getPickupDate());
 //    }
 
-    public OrderForIndividual save(OrderForIndividual orderForIndividual) {
-        return orderForIndividualRepository.save(orderForIndividual);
+    public OrderForFabric save(OrderForFabric order) {
+        return orderForFabricRepository.save(order);
     }
 
-    public List<OrderForIndividual> getOrderForIndividualPerson(IndividualPerson user) {
+    public List<OrderForFabric> getByFabric(Fabric fabric) {
 
         log.info("Получение заказов пользователя");
-        return orderForIndividualRepository.findByIndividualPersonId(user.getId());
+        return orderForFabricRepository.findByFabricId(fabric.getId());
     }
 
-    public List<OrderForIndividual> getAll() {
+    public List<OrderForFabric> getAll() {
         log.info("Получение списка всех заказов");
-        return orderForIndividualRepository.findAll();
+        return orderForFabricRepository.findAll();
     }
 
-    public OrderForIndividual getById(Long id) {
-        return orderForIndividualRepository.findById(id).orElse(null);
+    public OrderForFabric getById(Long id) {
+        return orderForFabricRepository.findById(id).orElse(null);
     }
 
-    public OrderForIndividual changeOrderStatus(Long id, OrderStatus status, PointManager manager) {
+    public OrderForFabric changeOrderStatus(Long id, OrderStatus status, PointManager manager) {
         log.info("Смена статуса заказа " + status);
-        OrderForIndividual orderForIndividual = getById(id);
-        orderForIndividual.setPointManager(manager);
-        orderForIndividual.setPointOfSale(manager.getPointOfSale());
-        orderForIndividual.setStatus(status);
-        return save(orderForIndividual);
+        OrderForFabric order = getById(id);
+        order.setStatus(status);
+        return save(order);
     }
 
-    public  List<OrderForIndividual> getByStatus(OrderStatus status) {
+    public List<OrderForFabric> getByStatus(OrderStatus status) {
         log.info("Поиск по статусу " + status);
-        return orderForIndividualRepository.findByStatus(status);
+        return orderForFabricRepository.findByStatus(status);
     }
 
-    public List<OrderForIndividual> getByDeliveryType(DeliveryType deliveryType) {
-        log.info("Поиск по типу доставки " + deliveryType);
-        return orderForIndividualRepository.findByDeliveryType(deliveryType);
-    }
-
-    public List<OrderForIndividual> getByPointOfSale(PointOfSale pointOfSale) {
+    public List<OrderForFabric> getByPointOfSale(PointOfSale pointOfSale) {
         log.info("Выдача заказов для " + pointOfSale.getId());
-        return orderForIndividualRepository.findByPointOfSale_Id(pointOfSale.getId());
+        return orderForFabricRepository.findByPointOfSale_Id(pointOfSale.getId());
     }
 
-    public OrderForIndividual createOrder(OrderForIndividualDto orderDto, IndividualPerson individualPerson, PointManager manager) {
+    public OrderForFabric createOrder(Long fabricId, PointManager manager) {
         log.info("Создание заказа");
-        KorzinaOnPointOfSale korzina = korzinaOnPointService.getKorzina(manager);
-        OrderForIndividual order = OrderForIndividual.builder()
-                .deliveryType(orderDto.equals("delivery") ? DeliveryType.DELIVERY : DeliveryType.PICKUP)
+        KorzinaOnPointForFabric korzina = korzinaOnPointForFabricService.getKorzina(manager);
+        OrderForFabric order = OrderForFabric.builder()
                 .orderDate(LocalDate.now())
-                .individualPerson(individualPerson)
+                .pointOfSale(manager.getPointOfSale())
+                .fabric(fabricService.getById(fabricId))
                 .products(new ArrayList<>(korzina.getProducts()))
                 .totalPrice(korzina.getTotalPrice())
-                .status(OrderStatus.WAITING_ACCESS).build();
+                .build();
         korzina.getProducts().clear();
-        if (orderDto.getDeliveryType().equals("delivery"))
-            order.setDeliveryAddress(orderDto.getCity() + " " + orderDto.getAddress());
-        else
-            order.setPointOfSale(pointOfSaleService.getById(orderDto.getPointId()));
-        return orderForIndividualRepository.save(order);
+        return orderForFabricRepository.save(order);
     }
 
-    public List<OrderForIndividual> getByDateBetween(LocalDate startDate, LocalDate endDate, PointOfSale pointOfSale) {
-        return orderForIndividualRepository.findByOrderDateBetweenAndPointOfSaleId(startDate, endDate, pointOfSale.getId());
+    public List<OrderForFabric> getByDateBetween(LocalDate startDate, LocalDate endDate, Fabric fabric) {
+        return orderForFabricRepository.findByOrderDateBetweenAndFabricId(startDate, endDate, fabric.getId());
     }
 }

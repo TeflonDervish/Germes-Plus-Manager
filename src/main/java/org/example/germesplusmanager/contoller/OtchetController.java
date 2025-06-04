@@ -1,6 +1,8 @@
 package org.example.germesplusmanager.contoller;
 
 import lombok.AllArgsConstructor;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.example.germesplusmanager.dto.OtchetDto;
 import org.example.germesplusmanager.enums.Role;
 import org.example.germesplusmanager.model.othcet.OtchetForPoint;
@@ -18,6 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 public class OtchetController {
 
+    private static final Log log = LogFactory.getLog(OtchetController.class);
     private final OtchetForPointService otchetForPointService;
 
     @ModelAttribute
@@ -33,8 +36,8 @@ public class OtchetController {
             @AuthenticationPrincipal PointManager manager,
             Model model
     ) {
-        List<OtchetForPoint> othets = otchetForPointService.getByPointOfSale(manager.getPointOfSale());
-        model.addAttribute("othets", othets);
+        List<OtchetForPoint> otchets = otchetForPointService.getByPointOfSale(manager.getPointOfSale());
+        model.addAttribute("otchets", otchets);
         if (manager.getRole().equals(Role.ADMIN)) return "forGlavMan/otchet";
         return "otchet";
     }
@@ -52,6 +55,8 @@ public class OtchetController {
                          @PathVariable Long id,
                          @AuthenticationPrincipal PointManager manager
     ) {
+        OtchetForPoint otchet = otchetForPointService.getById(id);
+        model.addAttribute("otchet", otchet);
         if (manager.getRole().equals(Role.ADMIN)) return "forGlavMan/otchet_form";
         return "otchet_form";
     }
@@ -62,6 +67,8 @@ public class OtchetController {
             Model model,
             @AuthenticationPrincipal PointManager manager
     ) {
+        List<OtchetForPoint> otchets = otchetForPointService.getByPointOfSaleAndNameContains(manager.getPointOfSale(), query);
+        model.addAttribute("otchets", otchets);
         if (manager.getRole().equals(Role.ADMIN)) return "forGlavMan/otchet";
         return "otchet";
     }
@@ -73,6 +80,17 @@ public class OtchetController {
             @AuthenticationPrincipal PointManager manager
     ) {
         otchetForPointService.createOtchet(manager, otchetDto);
+        return "redirect:/otchet";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(
+            @PathVariable Long id,
+            Model model,
+            @AuthenticationPrincipal PointManager manager
+    ) {
+        log.info("Удаление отчета");
+        otchetForPointService.deleteById(id);
         return "redirect:/otchet";
     }
 }

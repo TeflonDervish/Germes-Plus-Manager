@@ -5,7 +5,7 @@ import org.example.germesplusmanager.model.korzina.KorzinaOnPointOfSale;
 import org.example.germesplusmanager.model.persons.PointManager;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface KorzinaOnPointOfSaleRepository extends JpaRepository<KorzinaOnPointOfSale, Long> {
+public interface KorzinaOnPointForFabricRepository extends JpaRepository<KorzinaOnPointForFabric, Long> {
 
-  KorzinaOnPointOfSale findByPointManager(PointManager pointManager);
+  KorzinaOnPointForFabric findByPointManager(PointManager pointManager);
 }

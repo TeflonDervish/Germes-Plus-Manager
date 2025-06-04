@@ -450,23 +450,25 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="customerName">Наименование</label>
-                            <input type="text" id="customerName" name="customerName" disabled>
+                            <input type="text" id="customerName" name="customerName" th:value="${otchet.name}" disabled>
                         </div>
                         <div class="form-group">
                             <label for="customerName">От</label>
-                            <input type="date" id="customerName" name="customerName" disabled>
+                            <input type="date" id="customerName" name="customerName" th:value="${otchet.startDate}" disabled>
                         </div>
                         <div class="form-group">
                             <label for="customerPhone">До</label>
-                            <input type="date" id="customerPhone" name="customerPhone" disabled>
+                            <input type="date" id="customerPhone" name="customerPhone" th:value="${otchet.endDate}" disabled>
                         </div>
                         <div class="form-group">
                             <label for="textarea">Описание</label>
-                            <textarea id="textarea" name="customerPhone" disabled></textarea>
+                            <textarea id="textarea" name="customerPhone" th:text="${otchet.description}" disabled></textarea>
                         </div>
                     </div>
                     <div class="actions">
-                        <button type="submit" class="btn">Удалить отчет</button>
+                        <form th:action="@{/otchet/delete/{id}(id=${otchet.id})}" method="post">
+                            <button class="btn">Удалить отчет</button>
+                        </form>
                     </div>
                     <table class="documents-table">
                         <thead>
@@ -514,33 +516,23 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td><span class="status status-active">Активен</span></td>
-                            <td class="document-name">Договор №1245 от 15.03.2025</td>
-                            <td class="document-date">26.03.2025 14:30</td>
-                            <td>Договор</td>
-                            <td>ООО "ТехноПром"</td>
-
-                            <td>Входящий</td>
-                            <td>Внутренний</td>
-                        </tr>
-                        <tr>
-                            <td><span class="status">Черновик</span></td>
-                            <td>Акт</td>
-                            <td>ИП Смирнов А.А.</td>
-                            <td class="document-name">Акт выполненных работ №45</td>
-                            <td class="document-date">25.03.2025 10:15</td>
-                            <td>Исходящий</td>
-                            <td>Внутренний</td>
-                        </tr>
-                        <tr>
-                            <td><span class="status status-active">Активен</span></td>
-                            <td>Счет</td>
-                            <td>ООО "СтройГарант"</td>
-                            <td class="document-name">Счет на оплату №678</td>
-                            <td class="document-date">24.03.2025 16:45</td>
-                            <td>Внутренний</td>
-                            <td>Внутренний</td>
+                        <tr th:each="order : ${otchet.orders}">
+                            <td><a th:text="${order.status.title}" th:href="@{/order/{id} (id=${order.id})}"></a></td>
+                            <td><a th:text="${order.id}" th:href="@{/order/{id} (id=${order.id})}">321001</a></td>
+                            <td><a th:text="${order.orderDate}" th:href="@{/order/{id} (id=${order.id})}">2025-03-15</a></td>
+                            <td><a th:text="${order.individualPerson.phone}" th:href="@{/order/{id} (id=${order.id})}">+7 999
+                                111-22-33</a></td>
+                            <td><a th:text="${order.deliveryType.title}" th:href="@{/order/{id} (id=${order.id})}">Доставка</a>
+                            </td>
+                            <td><a th:text="${order.totalPrice}" th:href="@{/order/{id} (id=${order.id})}">36 500 ₽</a></td>
+                            <td th:if="${order.pointManager != null}">
+                                <a th:text="${order.pointManager.surname}"
+                                   th:href="@{/order/{id}(id=${order.id})}"></a>
+                            </td>
+                            <td th:unless="${order.pointManager != null}">
+                                <a th:text="'Не взято в работу'"
+                                   th:href="@{/order/{id}(id=${order.id})}"></a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -552,6 +544,7 @@
         </div>
 
     </div>
+</div>
 
 </body>
 </html>

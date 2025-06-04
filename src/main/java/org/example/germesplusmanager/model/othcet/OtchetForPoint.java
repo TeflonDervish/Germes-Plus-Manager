@@ -35,6 +35,7 @@ public class OtchetForPoint {
     )
     private List<OrderForIndividual> orders;
 
+
     @ManyToOne
     @JoinColumn(name = "point_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -63,5 +64,4 @@ public class OtchetForPoint {
         if (count == 0) return totalPrice;
         return totalPrice / count;
     }
-
 }

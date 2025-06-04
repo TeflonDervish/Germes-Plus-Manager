@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Заказ</title>
     <link rel="stylesheet" th:href="@{/style/for_point.css}"/>
+    <link rel="stylesheet" th:href="@{/style/for_admin.css}"/>
 
 
     <style>
@@ -237,7 +238,6 @@
                 <img height="150px" th:src="@{/img/body/forLoginRegistration/germes.png}" alt="">
             </div>
         </div>
-
         <div class="container_zakaz">
             <div class="order-header">
                 <h1 th:text="'Заказ: ' + ${order.products[0].name}">Заказ: Диван "Лорд"</h1>

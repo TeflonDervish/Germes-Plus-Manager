@@ -8,4 +8,6 @@ import java.util.List;
 public interface OtchetForPointRepository extends JpaRepository<OtchetForPoint, Long> {
 
     List<OtchetForPoint> findByPointOfSaleId(Long pointOfSaleId);
+
+    List<OtchetForPoint> findByPointOfSaleIdAndNameContaining(Long pointOfSaleId, String name);
 }

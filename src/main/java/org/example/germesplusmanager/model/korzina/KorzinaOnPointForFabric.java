@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @NoArgsConstructor
-public class KorzinaOnPointOfSale {
+public class KorzinaOnPointForFabric {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
