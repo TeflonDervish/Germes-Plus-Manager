@@ -28,7 +28,7 @@ public class OrderForFabric {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "order_for_fabric_product",
-            joinColumns = @JoinColumn(name = "order_ir"),
+            joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private List<ProductForIndividual> products;
