@@ -125,6 +125,7 @@ public class OrderForFabricService {
                 .fabric(fabricService.getById(fabricId))
                 .products(new ArrayList<>(korzina.getProducts()))
                 .totalPrice(korzina.getTotalPrice())
+                .status(OrderStatus.WAITING_ACCESS)
                 .build();
         korzina.getProducts().clear();
         return orderForFabricRepository.save(order);
