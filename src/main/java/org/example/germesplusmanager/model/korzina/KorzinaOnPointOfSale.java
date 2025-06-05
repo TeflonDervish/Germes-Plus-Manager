@@ -10,6 +10,7 @@ import org.example.germesplusmanager.model.products.ProductForIndividual;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -29,7 +30,7 @@ public class KorzinaOnPointOfSale {
             joinColumns = @JoinColumn(name = "korzina_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-    private List<ProductForIndividual> products;
+    private List<ProductForIndividual> products = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "point_manager_id")
