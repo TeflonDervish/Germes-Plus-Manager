@@ -26,7 +26,7 @@ public class KorzinaOnPointForFabric {
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
-            name = "korzina_product_on_point",
+            name = "korzina_product_on_point_for_fabric",
             joinColumns = @JoinColumn(name = "korzina_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
