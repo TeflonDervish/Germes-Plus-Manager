@@ -63,4 +63,6 @@ public class OrderForIndividual {
 
     @Column(length = 100)
     private String deliveryAddress;
+
+    private Integer deliveryPrice;
 }

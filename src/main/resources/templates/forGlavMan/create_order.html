@@ -9,6 +9,30 @@
 
 
     <style>
+
+        /* Убирает стрелочки в Chrome, Safari, Edge */
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Убирает стрелочки в Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+        .tupo_input_number {
+            width: 70px;
+            padding: 5px;
+            border-radius: 10px;
+            border: 2px solid #ffffff;
+            /* padding-left: 10px; */
+            font-size: 18px;
+            /*color: white;*/
+            /*background: rgba(255, 255, 255, 0);*/
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
         .container_zakaz {
             max-width: 100%;
             width: 80%;
@@ -477,10 +501,10 @@
 
                     <div class="total-summary">
                         <div>Стоимость товаров: <span id="productsTotal" th:text="${totalPrice} + ' руб.'">50 000</span></div>
-                        <div>Стоимость доставки: <span id="deliveryCost">800</span> руб.</div>
-                        <div style="font-size: 1.2em; margin-top: 5px;">Итого: <span id="orderTotal"
-                                                                                     th:text="${totalPrice} + 800 + ' руб.'">50 800</span>
-                        </div>
+                        <div>Стоимость доставки: <input type="number" class="tupo_input_number"> руб.</div>
+<!--                        <div style="font-size: 1.2em; margin-top: 5px;">Итого: <span id="orderTotal"-->
+<!--                                                                                     th:text="${totalPrice} + 800 + ' руб.'">50 800</span>-->
+<!--                        </div>-->
                     </div>
                 </div>
                 <form th:action="@{/order/create}" method="post">
