@@ -14,6 +14,7 @@ import org.example.germesplusmanager.model.persons.IndividualPerson;
 import org.example.germesplusmanager.model.persons.PointManager;
 import org.example.germesplusmanager.model.products.ProductForIndividual;
 import org.example.germesplusmanager.service.*;
+import org.hibernate.query.Order;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,11 +42,8 @@ public class OrderController {
     ) {
         model.addAttribute("products", productForIndividualService.getAll());
         model.addAttribute("manager", manager);
-
-        model.addAttribute("status",
-                Arrays.stream(OrderStatus.values())
-                        .filter(status -> status != OrderStatus.WAITING_ACCESS)
-                        .toArray(OrderStatus[]::new));
+        model.addAttribute("deliveryType", DeliveryType.values());
+        model.addAttribute("status", OrderStatus.values());
     }
 
     @GetMapping
@@ -62,7 +60,6 @@ public class OrderController {
         }
 
         model.addAttribute("orders", orders);
-        model.addAttribute("deliveryType", DeliveryType.values());
 
         if (manager.getRole().equals(Role.ADMIN)) return "forGlavMan/orders";
         return "orders";
@@ -80,6 +77,10 @@ public class OrderController {
 
         model.addAttribute("products", products);
         model.addAttribute("order", order);
+        model.addAttribute("status",
+                Arrays.stream(OrderStatus.values())
+                        .filter(status -> status != OrderStatus.WAITING_ACCESS)
+                        .toArray(OrderStatus[]::new));
 
         if (manager.getRole().equals(Role.ADMIN)) return "forGlavMan/order";
         return "order";

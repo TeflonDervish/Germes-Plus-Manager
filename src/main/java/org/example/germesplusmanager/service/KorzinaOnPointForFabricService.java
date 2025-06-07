@@ -62,6 +62,7 @@ public class KorzinaOnPointForFabricService {
     }
 
     public KorzinaOnPointForFabric clear(PointManager pointManager) {
+        log.info("Очистка корзины");
         KorzinaOnPointForFabric korzina = getKorzina(pointManager);
         korzina.getProducts().clear();
         return korzinaOnPointForFabricRepository.save(korzina);
