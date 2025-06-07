@@ -91,7 +91,7 @@
                 <tr th:each="sclad : ${scladList}">
                     <td th:text="${sclad.productForIndividual.name}"></td>
                     <td th:text="${sclad.productForIndividual.size}"></td>
-                    <td th:text="${sclad.productForIndividual.price}"></td>
+                    <td th:text="${sclad.productForIndividual.price} + ' руб.'"></td>
                     <td th:text="${sclad.count}"></td>
                 </tr>
                 </tbody>

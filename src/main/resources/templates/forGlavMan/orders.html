@@ -116,7 +116,7 @@
                         111-22-33</a></td>
                     <td><a th:text="${order.deliveryType.title}" th:href="@{/order/{id} (id=${order.id})}">Доставка</a>
                     </td>
-                    <td><a th:text="${order.totalPrice}" th:href="@{/order/{id} (id=${order.id})}">36 500 ₽</a></td>
+                    <td><a th:text="${order.totalPrice} + ' руб.'" th:href="@{/order/{id} (id=${order.id})}">36 500 ₽</a></td>
                     <td th:if="${order.pointManager != null}">
                         <a th:text="${order.pointManager.surname}"
                            th:href="@{/order/{id}(id=${order.id})}"></a>
