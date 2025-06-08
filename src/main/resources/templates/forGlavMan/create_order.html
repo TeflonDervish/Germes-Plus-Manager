@@ -21,11 +21,12 @@
         input[type=number] {
             -moz-appearance: textfield;
         }
+
         .tupo_input_number {
             width: 70px;
             padding: 5px;
             border-radius: 10px;
-            border: 2px solid #ffffff;
+            border: 2px solid #444444;
             /* padding-left: 10px; */
             font-size: 18px;
             /*color: white;*/
@@ -500,11 +501,11 @@
                     </table>
 
                     <div class="total-summary">
-                        <div>Стоимость товаров: <span id="productsTotal" th:text="${totalPrice} + ' руб.'">50 000</span></div>
-                        <div>Стоимость доставки: <input type="number" class="tupo_input_number"> руб.</div>
-<!--                        <div style="font-size: 1.2em; margin-top: 5px;">Итого: <span id="orderTotal"-->
-<!--                                                                                     th:text="${totalPrice} + 800 + ' руб.'">50 800</span>-->
-<!--                        </div>-->
+                        <div>Стоимость товаров: <span id="productsTotal" th:text="${totalPrice} + ' руб.'">50 000</span>
+                        </div>
+                        <!--                        <div style="font-size: 1.2em; margin-top: 5px;">Итого: <span id="orderTotal"-->
+                        <!--                                                                                     th:text="${totalPrice} + 800 + ' руб.'">50 800</span>-->
+                        <!--                        </div>-->
                     </div>
                 </div>
                 <form th:action="@{/order/create}" method="post">
@@ -541,6 +542,7 @@
                                 <input type="radio" id="deliveryType2" name="deliveryType" value="pickup">
                                 <label for="deliveryType2">Самовывоз</label>
                             </div>
+
                         </div>
 
                         <div id="deliveryFields">
@@ -576,6 +578,8 @@
                                     </select>
                                 </div>
                             </div>
+                            <div>Стоимость доставки:
+                                <input type="number" name="deliveryPrice" class="tupo_input_number"> руб.</div>
                         </div>
 
                         <div id="pickupFields" class="hidden">

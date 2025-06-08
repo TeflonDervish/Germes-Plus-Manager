@@ -17,4 +17,5 @@ public class OrderForIndividualDto {
     private String city;
     private String address;
     private Long pointId;
+    private Integer deliveryPrice;
 }

@@ -128,17 +128,24 @@ public class OrderForIndividualService {
         log.info("Создание заказа");
         KorzinaOnPointOfSale korzina = korzinaOnPointService.getKorzina(manager);
         OrderForIndividual order = OrderForIndividual.builder()
-                .deliveryType(orderDto.equals("delivery") ? DeliveryType.DELIVERY : DeliveryType.PICKUP)
                 .orderDate(LocalDate.now())
                 .individualPerson(individualPerson)
                 .products(new ArrayList<>(korzina.getProducts()))
                 .totalPrice(korzina.getTotalPrice())
-                .status(OrderStatus.WAITING_ACCESS).build();
+                .status(OrderStatus.WAITING_ACCESS)
+                .pointOfSale(manager.getPointOfSale())
+                .pointManager(manager)
+                .build();
         korzina.getProducts().clear();
-        if (orderDto.getDeliveryType().equals("delivery"))
+        if (orderDto.getDeliveryType().equals("delivery")){
+            order.setDeliveryPrice(orderDto.getDeliveryPrice());
             order.setDeliveryAddress(orderDto.getCity() + " " + orderDto.getAddress());
-        else
+            order.setDeliveryType(DeliveryType.DELIVERY);
+        }
+        else {
+            order.setDeliveryType(DeliveryType.PICKUP);
             order.setPointOfSale(pointOfSaleService.getById(orderDto.getPointId()));
+        }
         return orderForIndividualRepository.save(order);
     }
 
