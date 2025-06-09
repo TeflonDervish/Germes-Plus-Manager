@@ -145,6 +145,7 @@ public class OrderForIndividualService {
         else {
             order.setDeliveryType(DeliveryType.PICKUP);
             order.setPointOfSale(pointOfSaleService.getById(orderDto.getPointId()));
+            order.setDeliveryPrice(0);
         }
         return orderForIndividualRepository.save(order);
     }

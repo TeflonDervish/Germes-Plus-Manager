@@ -128,7 +128,7 @@ public class DocumentController {
 
         documentPart.addStyledParagraphOfText("Heading2", "Данные фабрики:");
         documentPart.addParagraphOfText("Продавец: " + order.getPointOfSale().getName());
-        documentPart.addParagraphOfText("Ответственный менеджер: " + order.getPointManager().getName());
+//        documentPart.addParagraphOfText("Ответственный менеджер: " + order.getPointManager().getName());
         documentPart.addParagraphOfText("Телефон: " + order.getPointOfSale().getPhoneNumber());
         documentPart.addParagraphOfText("Email: " + order.getPointOfSale().getEmail());
 
