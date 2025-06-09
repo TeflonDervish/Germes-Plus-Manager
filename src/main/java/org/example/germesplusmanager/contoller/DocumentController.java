@@ -4,8 +4,6 @@ import com.opencsv.CSVWriter;
 import lombok.AllArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.docx4j.openpackaging.exceptions.Docx4JException;
-import org.docx4j.openpackaging.exceptions.InvalidFormatException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
 import org.docx4j.wml.*;
@@ -26,6 +24,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 
 
 @RestController
@@ -52,7 +51,11 @@ public class DocumentController {
         log.info("Создание отчета");
         // Создаем CSV в памяти
         StringWriter writer = new StringWriter();
-        CSVWriter csvWriter = new CSVWriter(writer);
+        CSVWriter csvWriter = new CSVWriter(writer,
+                ';',  // разделитель
+                CSVWriter.NO_QUOTE_CHARACTER,  // не использовать кавычки
+                CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                CSVWriter.DEFAULT_LINE_END);
         OtchetForPoint othcet = otchetForPointService.getById(id);
 
         csvWriter.writeNext(new String[]{
@@ -72,19 +75,27 @@ public class DocumentController {
 
         csvWriter.writeNext(new String[]{});
 
-        csvWriter.writeNext(new String[] {"Наименование", othcet.getName()});
-        csvWriter.writeNext(new String[] {"От", othcet.getName()});
-        csvWriter.writeNext(new String[] {"До", othcet.getName()});
-        csvWriter.writeNext(new String[] {"Сумма", othcet.getTotalPrice().toString()});
-        csvWriter.writeNext(new String[] {"Кол-во диванов", othcet.getCount().toString()});
-        csvWriter.writeNext(new String[] {"Средняя стоимость", othcet.getMeanPrice().toString()});
+        csvWriter.writeNext(new String[]{"Наименование", othcet.getName()});
+        csvWriter.writeNext(new String[]{"От", othcet.getName()});
+        csvWriter.writeNext(new String[]{"До", othcet.getName()});
+        csvWriter.writeNext(new String[]{"Сумма", othcet.getTotalPrice().toString()});
+        csvWriter.writeNext(new String[]{"Кол-во диванов", othcet.getCount().toString()});
+        csvWriter.writeNext(new String[]{"Средняя стоимость", othcet.getMeanPrice().toString()});
 
-        ByteArrayInputStream in = new ByteArrayInputStream(writer.toString().getBytes());
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        outputStream.write(0xEF);
+        outputStream.write(0xBB);
+        outputStream.write(0xBF);
+        outputStream.write(writer.toString().getBytes(StandardCharsets.UTF_8));
+
+        ByteArrayInputStream in = new ByteArrayInputStream(outputStream.toByteArray());
+
 
         return ResponseEntity.ok()
                 .headers(prepareHeaders(othcet.getName() + ".csv"))
-                .contentType(MediaType.parseMediaType("text/csv"))
+                .contentType(MediaType.parseMediaType("text/csv; charset=UTF-8"))
                 .body(new InputStreamResource(in));
+
 
     }
 
