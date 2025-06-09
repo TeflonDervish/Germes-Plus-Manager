@@ -125,7 +125,7 @@ public class DocumentController {
         ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
 
         return ResponseEntity.ok()
-                .headers(prepareHeaders("Заказ № " + order.getId() + ".docx"))
+                .headers(prepareHeaders("Заказ_№_" + order.getId() + ".docx"))
                 .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
                 .body(new InputStreamResource(in));
     }
